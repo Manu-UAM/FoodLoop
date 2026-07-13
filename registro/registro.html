@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro · Rescate de Comida</title>
+
+    <!-- CSS BASE -->
+    <link rel="stylesheet" href="registro.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <div class="registro-container">
+        <div class="registro-card">
+
+            <!-- ===== INDICADOR DE PASOS ===== -->
+            <div class="step-indicator">
+                <div class="step active" id="step1Indicator">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Datos</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step2Indicator">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Tipo</span>
+                </div>
+                <div class="step-line" id="stepLine2"></div>
+                <div class="step" id="step3Indicator">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Preferencias</span>
+                </div>
+                <div class="step-line" id="stepLine3"></div>
+                <div class="step" id="step4Indicator">
+                    <span class="step-number">4</span>
+                    <span class="step-label">Confirmación</span>
+                </div>
+            </div>
+
+            <!-- ===== HEADER ===== -->
+            <div class="registro-header">
+                <img src="../images/logo.png" alt="Logo de la aplicación de rescate de comida" class="registro-logo" />
+                <h1 id="stepTitle">Crear Cuenta</h1>
+                <p class="subtitulo" id="stepSubtitle">Únete a la revolución contra el desperdicio</p>
+            </div>
+
+            <!-- ===== FORMULARIO ===== -->
+            <form id="registroForm" class="registro-form">
+
+                <!-- ========================================================= -->
+                <!-- PASO 1: DATOS PERSONALES -->
+                <!-- ========================================================= -->
+                <div id="step1" class="step-content active">
+                    <div class="form-group">
+                        <label for="nombre">
+                            <i class="fas fa-user" aria-hidden="true"></i> Nombre *
+                        </label>
+                        <input type="text" id="nombre" placeholder="José" required aria-required="true" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellido">
+                            <i class="fas fa-user" aria-hidden="true"></i> Apellido *
+                        </label>
+                        <input type="text" id="apellido" placeholder="Pérez" required aria-required="true" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope" aria-hidden="true"></i> Correo Electrónico *
+                        </label>
+                        <input type="email" id="email" placeholder="ejemplo@correo.com" required aria-required="true" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock" aria-hidden="true"></i> Contraseña *
+                        </label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" placeholder="Mínimo 6 caracteres" required aria-required="true" minlength="6" />
+                            <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar u ocultar contraseña">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirm">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i> Confirmar contraseña *
+                        </label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password_confirm" placeholder="Repite tu contraseña" required aria-required="true" minlength="6" />
+                            <button type="button" class="toggle-password" id="togglePasswordConfirm" aria-label="Mostrar u ocultar contraseña">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Botones Paso 1 -->
+                    <div class="step-buttons step1-buttons">
+                        <button type="button" class="btn-step btn-back-login" id="btnBackLogin1">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> Regresar al login
+                        </button>
+                        <button type="button" class="btn-step btn-next" id="btnNext1">
+                            Siguiente <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- PASO 2: TIPO DE USUARIO -->
+                <!-- ========================================================= -->
+                <div id="step2" class="step-content">
+                    <p class="step2-title">¿Qué tipo de usuario eres?</p>
+
+                    <div class="tipo-usuario-grid">
+                        <div class="tipo-usuario-card" data-tipo="consumidor">
+                            <div class="tipo-icono">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                            </div>
+                            <h3>Consumidor</h3>
+                            <p>Quiero comprar comida</p>
+                            <div class="tipo-check">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                            </div>
+                        </div>
+
+                        <div class="tipo-usuario-card" data-tipo="restaurante">
+                            <div class="tipo-icono">
+                                <i class="fas fa-store" aria-hidden="true"></i>
+                            </div>
+                            <h3>Restaurante</h3>
+                            <p>Quiero ofrecer comida</p>
+                            <div class="tipo-check">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones Paso 2 -->
+                    <div class="step-buttons">
+                        <button type="button" class="btn-step btn-prev" id="btnPrev2">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior
+                        </button>
+                        <button type="button" class="btn-step btn-next" id="btnNext2">
+                            Siguiente <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- PASO 3A: PREFERENCIAS (CONSUMIDOR) -->
+                <!-- ========================================================= -->
+                <div id="step3-consumidor" class="step-content">
+                    <div class="step-inner">
+                        <!-- Región -->
+                        <div class="form-group">
+                            <label for="region">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Región donde quieres ver ofertas
+                            </label>
+                            <select id="region" class="select-moderno">
+                                <option value="">Selecciona una región (opcional)</option>
+                                <option value="norte">Norte</option>
+                                <option value="sur">Sur</option>
+                                <option value="oriente">Oriente</option>
+                                <option value="poniente">Poniente</option>
+                                <option value="centro">Centro</option>
+                            </select>
+                        </div>
+
+                        <!-- Notificaciones -->
+                        <div class="form-group">
+                            <label class="notificaciones-label">
+                                <i class="fas fa-bell" aria-hidden="true"></i> ¿Cómo quieres recibir notificaciones?
+                            </label>
+                            <p class="notificaciones-subtext">Puedes elegir una, ambas o ninguna opción</p>
+
+                            <div class="notificaciones-grid">
+                                <!-- Email -->
+                                <label class="checkbox-moderno notificacion-card">
+                                    <input type="checkbox" id="notificacionEmail" />
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        <i class="fas fa-envelope" aria-hidden="true"></i> Email
+                                    </span>
+                                </label>
+
+                                <!-- WhatsApp -->
+                                <label class="checkbox-moderno notificacion-card" id="whatsappCard">
+                                    <input type="checkbox" id="notificacionWhatsapp" />
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">
+                                        <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Campo WhatsApp (aparece si se selecciona) -->
+                            <div id="whatsappField" style="display: none;" class="whatsapp-field">
+                                <label for="telefonoWhatsapp">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i> Número de teléfono (WhatsApp) *
+                                </label>
+                                <input type="tel" id="telefonoWhatsapp" placeholder="+55 600 000 000" />
+                                <p class="ayuda-texto">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    Incluye el código de tu país (ej: +55 para CDMX)
+                                    <br />
+                                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                    Te enviaremos un código de verificación por WhatsApp
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Botones Paso 3A -->
+                        <div class="step-buttons step3a-buttons">
+                            <button type="button" class="btn-step btn-prev" id="btnPrev3a">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior
+                            </button>
+                            <button type="button" class="btn-step btn-skip" id="btnOmitir3a">
+                                <i class="fas fa-forward" aria-hidden="true"></i> Omitir
+                            </button>
+                            <button type="button" class="btn-step btn-next" id="btnNext3a">
+                                Siguiente <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- PASO 3B: DATOS DEL RESTAURANTE -->
+                <!-- ========================================================= -->
+                <div id="step3-restaurante" class="step-content">
+                    <div class="step-inner">
+                        <!-- Nombre del restaurante -->
+                        <div class="form-group">
+                            <label for="nombreRestaurante">
+                                <i class="fas fa-store-alt" aria-hidden="true"></i> Nombre del restaurante *
+                            </label>
+                            <input type="text" id="nombreRestaurante" placeholder="Ej: La Casa de la Comida" required aria-required="true" />
+                        </div>
+
+                        <!-- Región -->
+                        <div class="form-group">
+                            <label for="regionRestaurante">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Región *
+                            </label>
+                            <select id="regionRestaurante" class="select-moderno" required>
+                                <option value="">Selecciona una región</option>
+                                <option value="norte">Norte</option>
+                                <option value="sur">Sur</option>
+                                <option value="oriente">Oriente</option>
+                                <option value="poniente">Poniente</option>
+                                <option value="centro">Centro</option>
+                            </select>
+                        </div>
+
+                        <!-- Dirección atomizada -->
+                        <div class="form-group">
+                            <label><i class="fas fa-location-dot" aria-hidden="true"></i> Dirección *</label>
+                            <div class="direccion-grid">
+                                <div class="direccion-item">
+                                    <label for="calle" class="direccion-label">Calle</label>
+                                    <input type="text" id="calle" placeholder="Av. Reforma" required />
+                                </div>
+                                <div class="direccion-item">
+                                    <label for="numero" class="direccion-label">Número</label>
+                                    <input type="text" id="numero" placeholder="123" required />
+                                </div>
+                                <div class="direccion-item">
+                                    <label for="colonia" class="direccion-label">Colonia</label>
+                                    <input type="text" id="colonia" placeholder="Centro" />
+                                </div>
+                                <div class="direccion-item">
+                                    <label for="ciudad" class="direccion-label">Ciudad</label>
+                                    <input type="text" id="ciudad" placeholder="Ciudad de México" required />
+                                </div>
+                                <div class="direccion-item">
+                                    <label for="codigoPostal" class="direccion-label">CP</label>
+                                    <input type="text" id="codigoPostal" placeholder="06000" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="form-group">
+                            <label for="categoria">
+                                <i class="fas fa-utensils" aria-hidden="true"></i> Categoría *
+                            </label>
+                            <select id="categoria" class="select-moderno" required>
+                                <option value="">Selecciona una categoría</option>
+                                <option value="rapida">Comida rápida</option>
+                                <option value="mexicana">Mexicana</option>
+                                <option value="italiana">Italiana</option>
+                                <option value="asiatica">Asiática</option>
+                                <option value="vegetariana">Vegetariana/Vegana</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <!-- Campo "Otro" (aparece si se selecciona) -->
+                        <div id="otroCategoriaField" style="display: none;" class="form-group">
+                            <label for="otroCategoriaTexto">
+                                <i class="fas fa-pen" aria-hidden="true"></i> Especifica tu categoría *
+                            </label>
+                            <input type="text" id="otroCategoriaTexto" placeholder="Ej: Comida saludable, Gourmet, etc." />
+                        </div>
+
+                        <!-- Horario -->
+                        <div class="form-group">
+                            <label for="horarioApertura">
+                                <i class="fas fa-clock" aria-hidden="true"></i> Horario de atención *
+                            </label>
+                            <div class="horario-container">
+                                <div class="horario-item">
+                                    <label for="horarioApertura" class="horario-label">Apertura</label>
+                                    <input type="time" id="horarioApertura" required />
+                                </div>
+                                <div class="horario-item">
+                                    <label for="horarioCierre" class="horario-label">Cierre</label>
+                                    <input type="time" id="horarioCierre" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones Paso 3B -->
+                        <div class="step-buttons">
+                            <button type="button" class="btn-step btn-prev" id="btnPrev3b">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior
+                            </button>
+                            <button type="button" class="btn-step btn-next" id="btnNext3b">
+                                Siguiente <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- PASO 4: CONFIRMACIÓN Y TÉRMINOS -->
+                <!-- ========================================================= -->
+                <div id="step4" class="step-content">
+                    <div class="step-inner">
+
+                        <!-- Foto local (solo restaurantes) -->
+                        <div id="fotoLocalContainer" style="display: none;">
+                            <div class="foto-local-box">
+                                <div class="foto-local-header">
+                                    <i class="fas fa-camera" aria-hidden="true"></i>
+                                    <span>Sube una foto de tu local</span>
+                                    <button type="button" class="btn-info-niveles" id="btnInfoNiveles">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                                <p class="foto-local-subtext">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    Para restauranteros nivel 2 y 3
+                                </p>
+                                <div class="foto-local-actions">
+                                    <button type="button" class="btn-foto" id="btnTomarFoto">
+                                        <i class="fas fa-camera" aria-hidden="true"></i> Tomar foto
+                                    </button>
+                                    <span class="foto-status" id="fotoStatus">📷 Sin foto</span>
+                                </div>
+                            </div>
+
+                            <!-- Modal niveles -->
+                            <div class="modal-overlay" id="modalNiveles">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3><i class="fas fa-crown" aria-hidden="true"></i> Niveles de Restaurantero</h3>
+                                        <button type="button" class="modal-close" id="modalClose">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="nivel-card nivel-0">
+                                            <div class="nivel-badge">Nivel 0</div>
+                                            <h4>📦 Registrado</h4>
+                                            <p>Solo puede donar (gratis). No puede vender ni subastar.</p>
+                                            <p class="nivel-destacado">Ideal para probar la app</p>
+                                        </div>
+                                        <div class="nivel-card nivel-1">
+                                            <div class="nivel-badge">Nivel 1</div>
+                                            <h4>✅ Verificado por Email/WhatsApp</h4>
+                                            <p>Puede vender/subastar hasta <strong>10 productos/día</strong>.</p>
+                                            <p>Requiere: Nombre, Dirección, Teléfono y confirmación de cuenta.</p>
+                                        </div>
+                                        <div class="nivel-card nivel-2">
+                                            <div class="nivel-badge">Nivel 2</div>
+                                            <h4>📍 Verificado por Geolocalización + Foto</h4>
+                                            <p>Puede vender/subastar hasta <strong>30 productos/día</strong>.</p>
+                                            <p>Requiere: Foto del exterior (con geolocalización) y foto de la cocina.</p>
+                                            <p class="nivel-destacado">Validación manual o geocodificación inversa</p>
+                                        </div>
+                                        <div class="nivel-card nivel-3">
+                                            <div class="nivel-badge">Nivel 3</div>
+                                            <h4>🏆 Verificado Oficial</h4>
+                                            <p>Ventas <strong>ilimitadas</strong>.</p>
+                                            <p>Requiere: RFC, licencia de funcionamiento y seguro de responsabilidad civil.</p>
+                                            <p class="nivel-destacado">Máxima confianza para tu negocio</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ===== VERIFICACIÓN WHATSAPP (solo si está activado) ===== -->
+                        <div id="verificacionWhatsappContainer" style="display: none;">
+                            <div class="verificacion-box">
+                                <div class="verificacion-header">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                    <span>Verificación por WhatsApp</span>
+                                </div>
+                                <p class="verificacion-subtext">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    Hemos enviado un código de verificación al número
+                                    <strong id="telefonoMostrado">+34 600 000 000</strong>
+                                </p>
+                                <div class="form-group">
+                                    <label for="codigoVerificacion">
+                                        <i class="fas fa-key" aria-hidden="true"></i> Código de verificación *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="codigoVerificacion" 
+                                        placeholder="Ingresa el código de 6 dígitos" 
+                                        maxlength="6"
+                                        autocomplete="off"
+                                    />
+                                    <div class="codigo-error" id="codigoError" style="display: none; color: #FF6B35; font-size: 13px; margin-top: 4px;">
+                                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                        Código incorrecto. Intenta nuevamente.
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-reenviar" id="btnReenviarCodigo">
+                                    <i class="fas fa-redo" aria-hidden="true"></i>
+                                    ¿No te llegó el código? Enviar otra vez
+                                </button>
+                                <p class="reenviar-mensaje" id="reenviarMensaje" style="display: none; color: #588157; font-size: 13px; margin-top: 6px;">
+                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                    ¡Código reenviado! Revisa tu WhatsApp.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Términos -->
+                        <div class="terminos-container">
+                            <p class="terminos-intro">
+                                Para poder publicar ofertas, necesitas:
+                            </p>
+
+                            <label class="checkbox-moderno terminos-check">
+                                <input type="checkbox" id="terminos" />
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">
+                                    Acepto los <a href="#" class="terminos-link">términos y condiciones</a>
+                                </span>
+                            </label>
+
+                            <label class="checkbox-moderno terminos-check">
+                                <input type="checkbox" id="privacidad" />
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">
+                                    Acepto la <a href="#" class="terminos-link">política de privacidad</a>
+                                </span>
+                            </label>
+
+                            <label class="checkbox-moderno terminos-check">
+                                <input type="checkbox" id="veridicidad" />
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">
+                                    Confirmo que la información proporcionada es verídica
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Botones Paso 4 -->
+                        <div class="step-buttons">
+                            <button type="button" class="btn-step btn-prev" id="btnPrev4">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior
+                            </button>
+                            <button type="submit" class="btn-step btn-submit" id="btnSubmit" disabled>
+                                <i class="fas fa-user-plus" aria-hidden="true"></i> Crear cuenta
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- ===== SWITCHES DE ACCESIBILIDAD (ABAJO) ===== -->
+            <div class="accesibilidad-footer">
+                <div class="switch-group">
+                    <span class="switch-label">
+                        <i class="fas fa-eye" aria-hidden="true"></i>
+                        Modo daltónico
+                    </span>
+                    <label class="switch">
+                        <input type="checkbox" id="modoDaltonico" />
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="switch-group">
+                    <span class="switch-label">
+                        <i class="fas fa-font" aria-hidden="true"></i>
+                        Texto grande
+                    </span>
+                    <label class="switch">
+                        <input type="checkbox" id="textoGrande" />
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+        <!-- ===== MODAL DE REGISTRO EXITOSO ===== -->
+    <div class="modal-exito-overlay" id="modalExito">
+        <div class="modal-exito">
+            <span class="modal-exito-icono">
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
+            </span>
+            <h2>🎉 ¡Registro Exitoso!</h2>
+            <p>Tu cuenta ha sido creada correctamente.</p>
+            <p class="mensaje-personalizado" id="mensajePersonalizado">
+                🎯 Comienza a descubrir ofertas cerca de ti
+            </p>
+            <button class="btn-ir-login" id="btnIrLogin">
+                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                Ir al inicio de sesión
+            </button>
+            <p class="contador-redireccion" id="contadorRedireccion">
+                Redirigiendo en 5 segundos...
+            </p>
+        </div>
+    </div>
+
+    <script src="registro.js"></script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+/* ================================================================
+   REGISTRO · MODO DALTÓNICO (PALETA MORADA)
+   ================================================================ */
+
+/* ===== REDEFINIR VARIABLES ===== */
+body.modo-daltonico {
+    --bg-body: linear-gradient(135deg, #2D1B69 0%, #4A2C8A 50%, #7B4FC8 100%);
+    --bg-card: #D4D0F0;
+    --border-card: #B8A5E8;
+    --text-primary: #1A0E3E;
+    --text-secondary: #4B3A7A;
+    --text-muted: #8B6BC8;
+    --color-primary: #7B4FC8;
+    --color-primary-dark: #4A2C8A;
+    --color-primary-light: #EEE8F7;
+    --color-error: #C84B7B;
+    --color-error-bg: #F5E8EE;
+    --color-success: #7B4FC8;
+    --shadow-color: rgba(123, 79, 200, 0.3);
+    --input-border: #B8A5E8;
+    --input-focus: #7B4FC8;
+    --step-inactive: #D4D0F0;
+    --step-active: #7B4FC8;
+    --toggle-hover: #7B4FC8;
+}
+
+/* ===== BACKGROUND DEL BODY ===== */
+body.modo-daltonico {
+    background: var(--bg-body) !important;
+}
+
+/* ===== TARJETA PRINCIPAL ===== */
+body.modo-daltonico .registro-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+}
+
+/* ===== LOGO ===== */
+body.modo-daltonico .registro-logo {
+    border: 2px solid var(--border-card);
+}
+
+/* ===== HEADER ===== */
+body.modo-daltonico .registro-header h1 {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .registro-header h1::after {
+    background: var(--color-primary);
+}
+
+body.modo-daltonico .subtitulo {
+    color: var(--color-primary-dark);
+}
+
+/* ===== FORM GROUP ===== */
+body.modo-daltonico .form-group label {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .form-group label i {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .form-group input,
+body.modo-daltonico .form-group select {
+    border: 2px solid var(--input-border);
+    background: #FFFFFF;
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .form-group input:focus,
+body.modo-daltonico .form-group select:focus {
+    outline: 3px solid var(--input-focus);
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 4px rgba(123, 79, 200, 0.15);
+}
+
+/* ===== ERROR ===== */
+body.modo-daltonico .form-group input.error,
+body.modo-daltonico .form-group select.error {
+    border-color: var(--color-error);
+    outline: 3px solid var(--color-error);
+    background-color: var(--color-error-bg);
+}
+
+/* ===== PASOS ===== */
+body.modo-daltonico .step.active .step-number {
+    background: var(--step-active);
+    color: #FFFFFF;
+}
+
+body.modo-daltonico .step:not(.active) .step-number {
+    background: var(--step-inactive);
+    color: #6B7280;
+}
+
+body.modo-daltonico .step.active .step-label {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .step-line {
+    background: var(--step-inactive);
+}
+
+body.modo-daltonico .step-line.active {
+    background: var(--step-active);
+}
+
+body.modo-daltonico .step2-title {
+    color: var(--text-primary);
+}
+
+/* ===== TIPO DE USUARIO ===== */
+body.modo-daltonico .tipo-usuario-card {
+    background: #FFFFFF;
+    border: 3px solid var(--step-inactive);
+}
+
+body.modo-daltonico .tipo-usuario-card.selected {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+
+body.modo-daltonico .tipo-usuario-card .tipo-icono {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .tipo-usuario-card h3 {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .tipo-usuario-card p {
+    color: var(--text-secondary);
+}
+
+body.modo-daltonico .tipo-usuario-card .tipo-check {
+    color: var(--step-inactive);
+}
+
+body.modo-daltonico .tipo-usuario-card.selected .tipo-check {
+    color: var(--color-primary);
+}
+
+/* ===== SELECT CON FLECHA ===== */
+body.modo-daltonico .select-moderno {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%237B4FC8' d='M7 10L1 4h12z'/%3E%3C/svg%3E");
+}
+
+body.modo-daltonico .select-moderno:focus {
+    outline: 3px solid var(--input-focus);
+    border-color: var(--input-focus);
+}
+
+/* ===== NOTIFICACIONES ===== */
+body.modo-daltonico .notificaciones-label {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .notificacion-card {
+    border: 2px solid var(--step-inactive);
+    background: #FFFFFF;
+}
+
+body.modo-daltonico .notificacion-card:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+
+body.modo-daltonico .notificacion-card .checkbox-text i {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .notificacion-card input:checked + .checkmark {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+body.modo-daltonico .whatsapp-field {
+    border: 2px solid var(--step-inactive);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+body.modo-daltonico .whatsapp-field label i {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .whatsapp-field input {
+    border: 2px solid var(--input-border);
+}
+
+body.modo-daltonico .whatsapp-field input:focus {
+    outline: 3px solid var(--input-focus);
+    border-color: var(--input-focus);
+}
+
+/* ===== CHECKBOX MODERNO ===== */
+body.modo-daltonico .checkbox-moderno {
+    border: 2px solid var(--step-inactive);
+}
+
+body.modo-daltonico .checkbox-moderno:hover {
+    border-color: var(--color-primary);
+}
+
+body.modo-daltonico .checkbox-moderno input:checked + .checkmark {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+body.modo-daltonico .checkbox-text {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .checkbox-text i {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .checkmark {
+    border: 2px solid var(--step-inactive);
+    background: #FFFFFF;
+}
+
+/* ===== DIRECCIÓN ===== */
+body.modo-daltonico .direccion-item input {
+    border: 2px solid var(--input-border);
+    background: #FFFFFF;
+}
+
+body.modo-daltonico .direccion-item input:focus {
+    outline: 3px solid var(--input-focus);
+    border-color: var(--input-focus);
+}
+
+/* ===== HORARIO ===== */
+body.modo-daltonico .horario-item input[type="time"] {
+    border: 2px solid var(--input-border);
+    color: var(--text-primary);
+    background: #FFFFFF;
+}
+
+body.modo-daltonico .horario-item input[type="time"]:focus {
+    outline: 3px solid var(--input-focus);
+    border-color: var(--input-focus);
+}
+
+/* ===== FOTO LOCAL ===== */
+body.modo-daltonico .foto-local-box {
+    border: 2px dashed var(--input-border);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.modo-daltonico .foto-local-header i {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .btn-info-niveles {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .btn-info-niveles:hover {
+    color: var(--color-primary-dark);
+}
+
+body.modo-daltonico .btn-foto {
+    background: var(--color-primary);
+    color: #FFFFFF;
+}
+
+body.modo-daltonico .btn-foto:hover {
+    background: var(--color-primary-dark);
+}
+
+body.modo-daltonico .foto-status.tiene-foto {
+    color: var(--color-success);
+}
+
+/* ===== MODAL ===== */
+body.modo-daltonico .modal-content {
+    background: var(--bg-card);
+}
+
+body.modo-daltonico .modal-header {
+    border-bottom: 2px solid var(--border-card);
+}
+
+body.modo-daltonico .modal-header h3 {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .nivel-card {
+    background: #E8E4F5;
+}
+
+body.modo-daltonico .nivel-card.nivel-0 {
+    border-left-color: #9CA3AF;
+}
+
+body.modo-daltonico .nivel-card.nivel-1 {
+    border-left-color: #4A90D9;
+}
+
+body.modo-daltonico .nivel-card.nivel-2 {
+    border-left-color: #C4A35A;
+}
+
+body.modo-daltonico .nivel-card.nivel-3 {
+    border-left-color: var(--color-primary);
+}
+
+body.modo-daltonico .nivel-badge {
+    background: var(--border-card);
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .nivel-card h4 {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .nivel-card p {
+    color: #4B5563;
+}
+
+body.modo-daltonico .nivel-card .nivel-destacado {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .nivel-card strong {
+    color: var(--text-primary);
+}
+
+/* ===== TÉRMINOS ===== */
+body.modo-daltonico .terminos-intro {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .terminos-link {
+    color: #5B3EA8;
+}
+
+body.modo-daltonico .terminos-link:hover {
+    color: var(--color-primary-dark);
+}
+
+body.modo-daltonico .terminos-check.checked {
+    border-color: var(--color-primary);
+    background: rgba(123, 79, 200, 0.08);
+}
+
+/* ================================================================
+   BOTONES - MODO DALTÓNICO
+   ================================================================ */
+body.modo-daltonico .btn-back-login,
+body.modo-daltonico .btn-prev,
+body.modo-daltonico .btn-skip {
+    background: var(--step-inactive) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--input-border) !important;
+}
+
+body.modo-daltonico .btn-back-login:hover,
+body.modo-daltonico .btn-prev:hover,
+body.modo-daltonico .btn-skip:hover {
+    background: #C5C0E8 !important;
+}
+
+body.modo-daltonico .btn-next,
+body.modo-daltonico .btn-submit {
+    background: var(--color-primary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--color-primary-dark) !important;
+    box-shadow: 0 4px 15px var(--shadow-color) !important;
+}
+
+body.modo-daltonico .btn-next:hover,
+body.modo-daltonico .btn-submit:hover:not(:disabled) {
+    background: var(--color-primary-dark) !important;
+    box-shadow: 0 8px 30px var(--shadow-color) !important;
+}
+
+body.modo-daltonico .btn-step:focus-visible {
+    outline: 3px solid var(--input-focus) !important;
+}
+
+/* ================================================================
+   SWITCHES - MODO DALTÓNICO
+   ================================================================ */
+body.modo-daltonico .accesibilidad-footer {
+    border-top: 2px solid var(--input-border);
+}
+
+body.modo-daltonico .switch-label {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .switch-label i {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico .switch input:checked + .slider {
+    background-color: var(--color-primary);
+}
+
+body.modo-daltonico .switch input:focus + .slider {
+    box-shadow: 0 0 0 3px var(--input-focus);
+}
+
+body.modo-daltonico .toggle-password {
+    color: var(--text-secondary);
+}
+
+body.modo-daltonico .toggle-password:hover {
+    color: var(--toggle-hover);
+}
+
+body.modo-daltonico .toggle-password:focus {
+    outline: 3px solid var(--input-focus);
+}
+
+/* ===== MODAL DE ÉXITO ===== */
+body.modo-daltonico .modal-exito {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+}
+
+body.modo-daltonico .modal-exito h2 {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico .modal-exito p {
+    color: var(--text-secondary);
+}
+
+body.modo-daltonico .modal-exito .mensaje-personalizado {
+    color: var(--text-secondary);
+}
+
+body.modo-daltonico .modal-exito .btn-ir-login {
+    background: var(--color-primary);
+}
+
+body.modo-daltonico .modal-exito .btn-ir-login:hover {
+    background: var(--color-primary-dark);
+}
+
+body.modo-daltonico .modal-exito .contador-redireccion {
+    color: var(--text-muted);
+}
+
+/* ===== CAMPO "OTRO" ===== */
+body.modo-daltonico #otroCategoriaField {
+    border: 2px solid var(--input-border);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.modo-daltonico #otroCategoriaField label {
+    color: var(--text-primary);
+}
+
+body.modo-daltonico #otroCategoriaField label i {
+    color: var(--color-primary);
+}
+
+body.modo-daltonico #otroCategoriaField input {
+    border: 2px solid var(--input-border);
+    background: #FFFFFF;
+}
+
+body.modo-daltonico #otroCategoriaField input:focus {
+    outline: 3px solid var(--input-focus);
+    border-color: var(--input-focus);
+}

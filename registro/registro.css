@@ -1,0 +1,2107 @@
+/* ================================================================
+   REGISTRO · ESTILOS UNIFICADOS CON VARIABLES CSS
+   ================================================================ */
+
+/* ===== VARIABLES CSS ===== */
+:root {
+    /* Modo Normal (Verde) */
+    --bg-body: #344E41;
+    --bg-card: #DAD7CD;
+    --border-card: #A3B18A;
+    --text-primary: #1B1B1B;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --color-primary: #588157;
+    --color-primary-dark: #3A5A40;
+    --color-primary-light: #F0F7EE;
+    --color-error: #FF6B35;
+    --color-error-bg: #FFF0EB;
+    --color-success: #588157;
+    --shadow-color: rgba(88, 129, 87, 0.3);
+    --input-border: #A3B18A;
+    --input-focus: #588157;
+    --step-inactive: #DAD7CD;
+    --step-active: #588157;
+    --toggle-hover: #588157;
+}
+
+/* ===== MODO DALTÓNICO ===== */
+body.modo-daltonico {
+    background: linear-gradient(135deg, #2D1B69 0%, #4A2C8A 50%, #7B4FC8 100%) !important;
+    --bg-card: #D4D0F0;
+    --border-card: #B8A5E8;
+    --text-primary: #1A0E3E;
+    --text-secondary: #4B3A7A;
+    --text-muted: #8B6BC8;
+    --color-primary: #7B4FC8;
+    --color-primary-dark: #4A2C8A;
+    --color-primary-light: #EEE8F7;
+    --color-error: #C84B7B;
+    --color-error-bg: #F5E8EE;
+    --color-success: #7B4FC8;
+    --shadow-color: rgba(123, 79, 200, 0.3);
+    --input-border: #B8A5E8;
+    --input-focus: #7B4FC8;
+    --step-inactive: #D4D0F0;
+    --step-active: #7B4FC8;
+    --toggle-hover: #7B4FC8;
+}
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 16px;
+    transition: all 0.4s ease;
+    background: var(--bg-body);
+}
+
+.registro-container {
+    width: 100%;
+    max-width: 560px;
+}
+
+.registro-card {
+    border-radius: 20px;
+    padding: 40px 35px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: slideUp 0.5s ease-out;
+    transition: all 0.4s ease;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== INDICADOR DE PASOS ===== */
+.step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 0;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.5;
+    transition: all 0.4s ease;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+}
+
+.step.active .step-number {
+    background: var(--step-active);
+    color: #FFFFFF;
+}
+
+.step:not(.active) .step-number {
+    background: var(--step-inactive);
+    color: var(--text-secondary);
+}
+
+.step-label {
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.4s ease;
+}
+
+.step.active .step-label {
+    color: var(--text-primary);
+}
+
+.step:not(.active) .step-label {
+    color: var(--text-secondary);
+}
+
+.step-line {
+    width: 30px;
+    height: 2px;
+    background: var(--step-inactive);
+    margin: 0 8px;
+    transition: all 0.4s ease;
+}
+
+.step-line.active {
+    background: var(--step-active);
+}
+
+/* ===== HEADER ===== */
+.registro-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.registro-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    padding: 5px;
+    transition: all 0.4s ease;
+    border: 2px solid var(--border-card);
+}
+
+.registro-header h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+    transition: all 0.4s ease;
+}
+
+.registro-header h1::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    margin: 8px auto 0;
+    border-radius: 2px;
+    background: var(--color-primary);
+    transition: all 0.4s ease;
+}
+
+.subtitulo {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 8px;
+    color: var(--color-primary-dark);
+    transition: all 0.4s ease;
+}
+
+/* ===== PASOS ===== */
+.step-content {
+    display: none;
+    animation: fadeStep 0.4s ease;
+}
+
+.step-content.active {
+    display: block;
+}
+
+@keyframes fadeStep {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.step-inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ===== FORMULARIO ===== */
+.registro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-group label i {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    color: var(--color-primary);
+}
+
+.form-group input,
+.form-group select {
+    padding: 14px 16px;
+    border: 2px solid var(--input-border);
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    width: 100%;
+    background: #FFFFFF;
+    color: var(--text-primary);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: 3px solid var(--input-focus);
+    outline-offset: 2px;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 4px rgba(88, 129, 87, 0.15);
+}
+
+body.modo-daltonico .form-group input:focus,
+body.modo-daltonico .form-group select:focus {
+    box-shadow: 0 0 0 4px rgba(123, 79, 200, 0.15);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+/* ===== ERROR ===== */
+.form-group input.error,
+.form-group select.error {
+    border-color: var(--color-error);
+    outline: 3px solid var(--color-error);
+    outline-offset: 2px;
+    background-color: var(--color-error-bg);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 16 16'%3E%3Cpath d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+body.modo-daltonico .form-group input.error,
+body.modo-daltonico .form-group select.error {
+    border-color: var(--color-error);
+    outline-color: var(--color-error);
+    background-color: var(--color-error-bg);
+}
+
+/* ===== MENSAJES DE ERROR ===== */
+.error-message {
+    font-size: 13px;
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    animation: fadeIn 0.3s ease;
+}
+
+.error-message i {
+    font-size: 14px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== CONTRASEÑA ===== */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 50px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 18px;
+    padding: 8px;
+    transition: color 0.3s;
+    color: var(--text-secondary);
+}
+
+.toggle-password:hover {
+    color: var(--toggle-hover);
+}
+
+.toggle-password:focus {
+    outline: 3px solid var(--input-focus);
+    outline-offset: 2px;
+    border-radius: 5px;
+}
+
+/* ================================================================
+   PASO 2: TIPO DE USUARIO
+   ================================================================ */
+.step2-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    transition: all 0.4s ease;
+}
+
+.tipo-usuario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tipo-usuario-card {
+    border: 3px solid var(--step-inactive);
+    border-radius: 16px;
+    padding: 25px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    background: #FFFFFF;
+    outline: none;
+}
+
+.tipo-usuario-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.tipo-usuario-card:focus-visible {
+    outline: 3px solid var(--input-focus);
+    outline-offset: 2px;
+}
+
+.tipo-usuario-card.selected {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+    box-shadow: 0 0 0 4px rgba(88, 129, 87, 0.15);
+}
+
+body.modo-daltonico .tipo-usuario-card.selected {
+    box-shadow: 0 0 0 4px rgba(123, 79, 200, 0.15);
+}
+
+.tipo-usuario-card .tipo-icono {
+    font-size: 40px;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.tipo-usuario-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+}
+
+.tipo-usuario-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.tipo-usuario-card .tipo-check {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: var(--step-inactive);
+    transition: all 0.3s ease;
+}
+
+.tipo-usuario-card.selected .tipo-check {
+    color: var(--color-primary);
+}
+
+/* ================================================================
+   PASO 3: NOTIFICACIONES
+   ================================================================ */
+.notificaciones-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.notificaciones-subtext {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: -4px;
+    margin-bottom: 4px;
+}
+
+.notificaciones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.notificacion-card {
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid var(--step-inactive);
+    border-radius: 12px;
+    padding: 14px 16px;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.notificacion-card:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--color-primary);
+}
+
+.notificacion-card .checkbox-text {
+    font-size: 14px;
+    font-weight: 500;
+    gap: 8px;
+}
+
+.notificacion-card .checkbox-text i {
+    font-size: 18px;
+}
+
+/* ===== CHECKBOX MODERNO ===== */
+.checkbox-moderno {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    cursor: pointer !important;
+    padding: 12px 16px !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    border: 2px solid var(--step-inactive) !important;
+    width: 100% !important;
+}
+
+.checkbox-moderno:hover {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.checkbox-moderno input {
+    display: none !important;
+}
+
+.checkmark {
+    width: 22px !important;
+    height: 22px !important;
+    border: 2px solid var(--step-inactive) !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    transition: all 0.3s ease !important;
+    background: #FFFFFF !important;
+}
+
+.checkbox-moderno input:checked + .checkmark {
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.checkbox-moderno input:checked + .checkmark::after {
+    content: '✓' !important;
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+.checkbox-text {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--text-primary) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.checkbox-text i {
+    color: var(--color-primary) !important;
+}
+
+/* ===== WHATSAPP FIELD ===== */
+.whatsapp-field {
+    margin-top: 10px !important;
+    padding: 16px !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px !important;
+    border: 2px solid var(--step-inactive) !important;
+    animation: slideDown 0.3s ease !important;
+    display: block !important;
+}
+
+.whatsapp-field label {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-bottom: 6px !important;
+}
+
+.whatsapp-field label i {
+    color: var(--color-primary) !important;
+}
+
+.whatsapp-field input {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    border: 2px solid var(--input-border) !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    background: #FFFFFF !important;
+    color: var(--text-primary) !important;
+}
+
+.whatsapp-field input:focus {
+    outline: 3px solid var(--input-focus) !important;
+    border-color: var(--input-focus) !important;
+}
+
+.whatsapp-field input.error {
+    border-color: var(--color-error) !important;
+    outline: 3px solid var(--color-error) !important;
+    background-color: var(--color-error-bg) !important;
+}
+
+.ayuda-texto {
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    margin-top: 4px !important;
+}
+
+body.modo-daltonico .ayuda-texto {
+    color: var(--text-secondary) !important;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================================================
+   DIRECCIÓN ATOMIZADA
+   ================================================================ */
+.direccion-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 10px;
+}
+
+.direccion-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.direccion-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.direccion-item input {
+    padding: 12px 14px;
+    border: 2px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+    background: #FFFFFF;
+    color: var(--text-primary);
+}
+
+.direccion-item input:focus {
+    outline: 3px solid var(--input-focus);
+    outline-offset: 2px;
+    border-color: var(--input-focus);
+}
+
+.direccion-item input.error {
+    border-color: var(--color-error);
+    outline: 3px solid var(--color-error);
+    background-color: var(--color-error-bg);
+}
+
+/* ================================================================
+   HORARIO
+   ================================================================ */
+.horario-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.horario-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.horario-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.horario-item input[type="time"] {
+    padding: 14px 16px;
+    border: 2px solid var(--input-border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #FFFFFF;
+    transition: all 0.3s ease;
+    width: 100%;
+    color: var(--text-primary);
+}
+
+.horario-item input[type="time"]:focus {
+    outline: 3px solid var(--input-focus);
+    outline-offset: 2px;
+    border-color: var(--input-focus);
+}
+
+.horario-item input[type="time"].error {
+    border-color: var(--color-error);
+    outline: 3px solid var(--color-error);
+    background-color: var(--color-error-bg);
+}
+
+/* ================================================================
+   PASO 4: TÉRMINOS
+   ================================================================ */
+.terminos-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-top: 5px !important;
+    width: 100% !important;
+}
+
+.terminos-intro {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 5px !important;
+}
+
+.terminos-link {
+    color: var(--color-primary) !important;
+    text-decoration: underline !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.terminos-link:hover {
+    color: var(--color-primary-dark) !important;
+}
+
+.terminos-check {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    border: 2px solid transparent !important;
+    transition: all 0.3s ease !important;
+}
+
+.terminos-check:hover {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-color: var(--step-inactive) !important;
+}
+
+.terminos-check.checked {
+    border-color: var(--color-primary) !important;
+    background: rgba(88, 129, 87, 0.08) !important;
+}
+
+body.modo-daltonico .terminos-check.checked {
+    background: rgba(123, 79, 200, 0.08) !important;
+}
+
+/* ================================================================
+   FOTO LOCAL
+   ================================================================ */
+.foto-local-box {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px dashed var(--input-border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.foto-local-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+}
+
+.foto-local-header i {
+    color: var(--color-primary);
+}
+
+.btn-info-niveles {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-info-niveles:hover {
+    color: var(--color-primary-dark);
+    transform: scale(1.1);
+}
+
+.foto-local-subtext {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.foto-local-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-foto {
+    background: var(--color-primary);
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-foto:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.foto-status {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.foto-status.tiene-foto {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+/* ================================================================
+   MODAL DE NIVELES
+   ================================================================ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #FFFFFF;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+body.modo-daltonico .modal-content {
+    background: var(--bg-card);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 2px solid var(--step-inactive);
+    position: sticky;
+    top: 0;
+    background: #FFFFFF;
+    z-index: 10;
+    border-radius: 20px 20px 0 0;
+}
+
+body.modo-daltonico .modal-header {
+    background: var(--bg-card);
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-header h3 i {
+    color: #C4A35A;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    padding: 0 5px;
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.nivel-card {
+    background: #F9FAF8;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--step-inactive);
+    transition: all 0.3s ease;
+}
+
+body.modo-daltonico .nivel-card {
+    background: #E8E4F5;
+}
+
+.nivel-card:hover {
+    transform: translateX(5px);
+}
+
+.nivel-card.nivel-0 {
+    border-left-color: #9CA3AF;
+}
+.nivel-card.nivel-1 {
+    border-left-color: #4A90D9;
+}
+.nivel-card.nivel-2 {
+    border-left-color: #C4A35A;
+}
+.nivel-card.nivel-3 {
+    border-left-color: var(--color-primary);
+}
+
+.nivel-badge {
+    display: inline-block;
+    background: var(--step-inactive);
+    color: var(--text-primary);
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.nivel-card h4 {
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.nivel-card p {
+    font-size: 14px;
+    color: #4B5563;
+    margin: 4px 0;
+    line-height: 1.5;
+}
+
+body.modo-daltonico .nivel-card p {
+    color: var(--text-secondary);
+}
+
+.nivel-card .nivel-destacado {
+    font-size: 12px;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+.nivel-card strong {
+    color: var(--text-primary);
+}
+
+/* ================================================================
+   MODAL DE REGISTRO EXITOSO
+   ================================================================ */
+.modal-exito-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeInOverlay 0.4s ease;
+}
+
+.modal-exito-overlay.active {
+    display: flex;
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-exito {
+    background: #FFFFFF;
+    border-radius: 24px;
+    max-width: 480px;
+    width: 100%;
+    padding: 40px 35px;
+    text-align: center;
+    animation: slideUp 0.5s ease;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+body.modo-daltonico .modal-exito {
+    background: var(--bg-card);
+    border: 2px solid var(--border-card);
+}
+
+.modal-exito-icono {
+    font-size: 72px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.modal-exito-icono .fa-check-circle {
+    color: var(--color-success);
+}
+
+.modal-exito h2 {
+    font-size: 28px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.modal-exito p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    line-height: 1.6;
+}
+
+.modal-exito .mensaje-personalizado {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.modal-exito .btn-ir-login {
+    margin-top: 25px;
+    padding: 14px 40px;
+    background: var(--color-primary);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-exito .btn-ir-login:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--shadow-color);
+}
+
+.modal-exito .contador-redireccion {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ================================================================
+   BOTONES
+   ================================================================ */
+.step-buttons,
+.step1-buttons,
+.step3a-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.btn-step {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 14px 24px !important;
+    border-radius: 10px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    font-family: 'Inter', sans-serif !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border: 2px solid !important;
+    text-decoration: none !important;
+    min-width: 120px !important;
+    flex: 1 !important;
+}
+
+.btn-step:hover {
+    transform: translateY(-2px) !important;
+}
+
+.btn-step:focus-visible {
+    outline: 3px solid var(--input-focus) !important;
+    outline-offset: 3px !important;
+}
+
+/* --- Botón "Regresar al login" --- */
+.btn-back-login {
+    background: var(--step-inactive) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--input-border) !important;
+}
+
+.btn-back-login:hover {
+    background: #C5C2B8 !important;
+}
+
+body.modo-daltonico .btn-back-login:hover {
+    background: #C5C0E8 !important;
+}
+
+/* --- Botón "Anterior" --- */
+.btn-prev {
+    background: var(--step-inactive) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--input-border) !important;
+}
+
+.btn-prev:hover {
+    background: #C5C2B8 !important;
+}
+
+body.modo-daltonico .btn-prev:hover {
+    background: #C5C0E8 !important;
+}
+
+/* --- Botón "Siguiente" --- */
+.btn-next {
+    background: var(--color-primary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--color-primary-dark) !important;
+    box-shadow: 0 4px 15px var(--shadow-color) !important;
+}
+
+.btn-next:hover {
+    background: var(--color-primary-dark) !important;
+    box-shadow: 0 8px 30px var(--shadow-color) !important;
+}
+
+/* --- Botón "Omitir" --- */
+.btn-skip {
+    background: var(--step-inactive) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--input-border) !important;
+}
+
+.btn-skip:hover {
+    background: #C5C2B8 !important;
+}
+
+body.modo-daltonico .btn-skip:hover {
+    background: #C5C0E8 !important;
+}
+
+/* --- Botón "Crear cuenta" --- */
+.btn-submit {
+    background: var(--color-primary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--color-primary-dark) !important;
+    box-shadow: 0 4px 15px var(--shadow-color) !important;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: var(--color-primary-dark) !important;
+    box-shadow: 0 8px 30px var(--shadow-color) !important;
+}
+
+.btn-submit:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ================================================================
+   SWITCHES DE ACCESIBILIDAD
+   ================================================================ */
+.accesibilidad-footer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid var(--input-border);
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.switch-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.switch-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.switch-label i {
+    font-size: 14px;
+    color: var(--color-primary);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 26px;
+}
+
+.slider::before {
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+    background-color: var(--color-primary);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(22px);
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 0 3px var(--input-focus);
+}
+
+/* ===== SWITCH EN MODO DALTÓNICO ===== */
+body.modo-daltonico .slider {
+    background-color: #9C8BC8 !important;
+}
+
+body.modo-daltonico .switch input:checked + .slider {
+    background-color: var(--color-primary) !important;
+}
+
+/* ================================================================
+   SELECT CON FLECHA - VERSIÓN DEFINITIVA
+   ================================================================ */
+.select-moderno {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    padding-right: 45px !important;
+    background-color: #FFFFFF !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23588157' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    border: 2px solid var(--input-border) !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    width: 100% !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    min-height: 48px !important;
+}
+
+.select-moderno:hover {
+    border-color: var(--color-primary) !important;
+}
+
+.select-moderno:focus {
+    outline: 3px solid var(--input-focus) !important;
+    outline-offset: 2px !important;
+    border-color: var(--input-focus) !important;
+    box-shadow: 0 0 0 4px rgba(88, 129, 87, 0.15) !important;
+}
+
+/* === SELECT en modo daltónico === */
+body.modo-daltonico .select-moderno {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%237B4FC8' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    background-color: #FFFFFF !important;
+    border-color: var(--input-border) !important;
+}
+
+body.modo-daltonico .select-moderno:focus {
+    outline: 3px solid var(--input-focus) !important;
+    outline-offset: 2px !important;
+    border-color: var(--input-focus) !important;
+    box-shadow: 0 0 0 4px rgba(123, 79, 200, 0.15) !important;
+}
+
+body.modo-daltonico .select-moderno:hover {
+    border-color: var(--color-primary) !important;
+}
+
+/* === Placeholder en selects === */
+select option[value=""] {
+    color: var(--text-muted) !important;
+}
+
+select option {
+    color: var(--text-primary) !important;
+    background: #FFFFFF !important;
+}
+
+select:invalid {
+    color: var(--text-muted) !important;
+}
+
+select:valid {
+    color: var(--text-primary) !important;
+}
+
+/* === Modo daltónico para options === */
+body.modo-daltonico select option[value=""] {
+    color: var(--text-muted) !important;
+}
+
+body.modo-daltonico select option {
+    color: var(--text-primary) !important;
+    background: #FFFFFF !important;
+}
+
+body.modo-daltonico select:invalid {
+    color: var(--text-muted) !important;
+}
+
+body.modo-daltonico select:valid {
+    color: var(--text-primary) !important;
+}
+
+/* ================================================================
+   VERIFICACIÓN WHATSAPP
+   ================================================================ */
+.verificacion-box {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--step-inactive);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    animation: slideDown 0.4s ease;
+}
+
+.verificacion-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.verificacion-header i {
+    color: #25D366;
+    font-size: 24px;
+}
+
+.verificacion-subtext {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.verificacion-subtext strong {
+    color: var(--text-primary);
+}
+
+.verificacion-box .form-group input {
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.verificacion-box .form-group input.verificado {
+    border-color: var(--color-success) !important;
+    outline: 3px solid var(--color-success) !important;
+    background-color: rgba(88, 129, 87, 0.05) !important;
+}
+
+body.modo-daltonico .verificacion-box .form-group input.verificado {
+    background-color: rgba(123, 79, 200, 0.1) !important;
+}
+
+.btn-reenviar {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-reenviar:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+.btn-reenviar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+.reenviar-mensaje {
+    animation: fadeIn 0.3s ease;
+    color: var(--color-success) !important;
+    font-size: 13px !important;
+    margin-top: 6px !important;
+}
+
+/* ================================================================
+   TEXTO GRANDE
+   ================================================================ */
+body.texto-grande {
+    font-size: 22px !important;
+}
+
+body.texto-grande .registro-card {
+    padding: 50px 45px !important;
+}
+
+body.texto-grande h1 {
+    font-size: 36px !important;
+}
+
+body.texto-grande .subtitulo {
+    font-size: 18px !important;
+}
+
+body.texto-grande .btn-step {
+    font-size: 20px !important;
+    padding: 18px 28px !important;
+    min-height: 60px !important;
+}
+
+body.texto-grande .btn-step i {
+    font-size: 20px !important;
+}
+
+body.texto-grande .form-group label {
+    font-size: 18px !important;
+}
+
+body.texto-grande .form-group input,
+body.texto-grande .form-group select {
+    font-size: 18px !important;
+    padding: 16px 20px !important;
+    min-height: 56px !important;
+}
+
+body.texto-grande .step-label {
+    font-size: 15px !important;
+}
+
+body.texto-grande .step2-title {
+    font-size: 22px !important;
+}
+
+body.texto-grande .tipo-usuario-card h3 {
+    font-size: 20px !important;
+}
+
+body.texto-grande .tipo-usuario-card p {
+    font-size: 16px !important;
+}
+
+body.texto-grande .tipo-usuario-card .tipo-icono {
+    font-size: 50px !important;
+}
+
+body.texto-grande .switch-label {
+    font-size: 16px !important;
+}
+
+body.texto-grande .registro-logo {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+body.texto-grande .step-number {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 16px !important;
+}
+
+body.texto-grande .checkbox-text {
+    font-size: 16px !important;
+}
+
+body.texto-grande .terminos-intro {
+    font-size: 16px !important;
+}
+
+body.texto-grande .foto-local-header {
+    font-size: 20px !important;
+}
+
+body.texto-grande .notificaciones-label {
+    font-size: 18px !important;
+}
+
+body.texto-grande .notificaciones-subtext {
+    font-size: 15px !important;
+}
+
+body.texto-grande .whatsapp-field label {
+    font-size: 16px !important;
+}
+
+body.texto-grande .direccion-label {
+    font-size: 13px !important;
+}
+
+body.texto-grande .direccion-item input {
+    font-size: 16px !important;
+    padding: 14px 16px !important;
+    min-height: 50px !important;
+}
+
+body.texto-grande .switch {
+    width: 54px !important;
+    height: 30px !important;
+}
+
+body.texto-grande .slider::before {
+    height: 24px !important;
+    width: 24px !important;
+    left: 3px !important;
+    bottom: 3px !important;
+}
+
+body.texto-grande .switch input:checked + .slider::before {
+    transform: translateX(24px) !important;
+}
+
+body.texto-grande .verificacion-header {
+    font-size: 20px !important;
+}
+
+body.texto-grande .verificacion-subtext {
+    font-size: 16px !important;
+}
+
+body.texto-grande .verificacion-box .form-group input {
+    font-size: 22px !important;
+    padding: 16px 20px !important;
+    min-height: 60px !important;
+}
+
+body.texto-grande .btn-reenviar {
+    font-size: 16px !important;
+}
+
+body.texto-grande .modal-exito h2 {
+    font-size: 32px !important;
+}
+
+body.texto-grande .modal-exito p {
+    font-size: 18px !important;
+}
+
+body.texto-grande .modal-exito .btn-ir-login {
+    font-size: 18px !important;
+    padding: 16px 44px !important;
+    min-height: 60px !important;
+}
+
+body.texto-grande .select-moderno {
+    font-size: 18px !important;
+    padding: 16px 20px !important;
+    min-height: 56px !important;
+    background-size: 18px !important;
+}
+
+body.texto-grande .password-wrapper input {
+    font-size: 18px !important;
+    padding: 16px 50px 16px 20px !important;
+    min-height: 56px !important;
+}
+
+body.texto-grande .toggle-password {
+    font-size: 22px !important;
+}
+
+body.texto-grande .error-message {
+    font-size: 16px !important;
+}
+
+body.texto-grande .foto-local-actions {
+    font-size: 16px !important;
+}
+
+body.texto-grande .btn-foto {
+    font-size: 16px !important;
+    padding: 12px 30px !important;
+    min-height: 50px !important;
+}
+
+body.texto-grande .foto-status {
+    font-size: 16px !important;
+}
+
+body.texto-grande .terminos-check {
+    padding: 14px 20px !important;
+    min-height: 56px !important;
+}
+
+body.texto-grande .terminos-link {
+    font-size: 16px !important;
+}
+
+body.texto-grande .nivel-card {
+    padding: 20px 24px !important;
+}
+
+body.texto-grande .nivel-card h4 {
+    font-size: 18px !important;
+}
+
+body.texto-grande .nivel-card p {
+    font-size: 16px !important;
+}
+
+body.texto-grande .nivel-badge {
+    font-size: 13px !important;
+    padding: 4px 16px !important;
+}
+
+body.texto-grande .modal-header h3 {
+    font-size: 22px !important;
+}
+
+body.texto-grande .modal-close {
+    font-size: 32px !important;
+}
+
+body.texto-grande .step-indicator {
+    margin-bottom: 30px !important;
+}
+
+body.texto-grande .step-line {
+    width: 40px !important;
+}
+
+body.texto-grande .registro-container {
+    max-width: 640px !important;
+}
+
+body.texto-grande .whatsapp-field {
+    padding: 20px !important;
+}
+
+body.texto-grande .whatsapp-field input {
+    min-height: 56px !important;
+    font-size: 18px !important;
+}
+
+body.texto-grande .horario-item input[type="time"] {
+    font-size: 18px !important;
+    padding: 16px 20px !important;
+    min-height: 56px !important;
+}
+
+body.texto-grande .horario-label {
+    font-size: 14px !important;
+}
+
+body.texto-grande .ayuda-texto {
+    font-size: 14px !important;
+}
+
+body.texto-grande .verificacion-box {
+    padding: 24px !important;
+}
+
+body.texto-grande .modal-exito .contador-redireccion {
+    font-size: 16px !important;
+}
+
+/* ================================================================
+   CORRECCIONES FINALES PARA MODO DALTÓNICO
+   ================================================================ */
+
+/* === BOTÓN "FOTO" EN MODO DALTÓNICO === */
+body.modo-daltonico .btn-foto {
+    background: var(--color-primary) !important;
+}
+
+body.modo-daltonico .btn-foto:hover {
+    background: var(--color-primary-dark) !important;
+}
+
+/* === BOTÓN "IR A LOGIN" EN MODAL DE ÉXITO === */
+body.modo-daltonico .modal-exito .btn-ir-login {
+    background: var(--color-primary) !important;
+}
+
+body.modo-daltonico .modal-exito .btn-ir-login:hover {
+    background: var(--color-primary-dark) !important;
+}
+
+/* === CHECKBOX EN MODO DALTÓNICO === */
+body.modo-daltonico .checkbox-moderno input:checked + .checkmark {
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* === CAMPO DE TELÉFONO WHATSAPP EN MODO DALTÓNICO === */
+body.modo-daltonico .whatsapp-field {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: var(--input-border) !important;
+}
+
+body.modo-daltonico .whatsapp-field input {
+    border-color: var(--input-border) !important;
+}
+
+body.modo-daltonico .whatsapp-field input:focus {
+    border-color: var(--input-focus) !important;
+    outline: 3px solid var(--input-focus) !important;
+}
+
+/* === NOTIFICACIONES EN MODO DALTÓNICO === */
+body.modo-daltonico .notificacion-card input:checked + .checkmark {
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 600px) {
+    .registro-card {
+        padding: 25px 18px;
+    }
+
+    .registro-header h1 {
+        font-size: 24px;
+    }
+
+    .step-indicator {
+        gap: 0;
+    }
+
+    .step-label {
+        display: none;
+    }
+
+    .step-line {
+        width: 20px;
+    }
+
+    .tipo-usuario-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .notificaciones-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .direccion-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .step-buttons,
+    .step1-buttons,
+    .step3a-buttons {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .btn-step {
+        width: 100% !important;
+        flex: none !important;
+        justify-content: center !important;
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+        min-width: unset !important;
+    }
+
+    .step3a-buttons .btn-prev,
+    .step3a-buttons .btn-skip,
+    .step3a-buttons .btn-next {
+        flex: none !important;
+        width: 100% !important;
+    }
+
+    .accesibilidad-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .switch-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .horario-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .foto-local-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .modal-content {
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+
+    .nivel-card {
+        padding: 14px 16px;
+    }
+
+    .whatsapp-field {
+        padding: 12px !important;
+    }
+
+    .checkbox-moderno {
+        padding: 10px 14px !important;
+    }
+
+    .verificacion-box {
+        padding: 15px;
+    }
+
+    .verificacion-header {
+        font-size: 16px;
+    }
+
+    .verificacion-header i {
+        font-size: 20px;
+    }
+
+    .verificacion-box .form-group input {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    .modal-exito {
+        padding: 30px 20px;
+    }
+
+    .modal-exito h2 {
+        font-size: 24px;
+    }
+
+    .modal-exito .btn-ir-login {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .direccion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ================================================================
+   CORRECCIÓN DEFINITIVA PARA SELECTS DE REGIÓN
+   ================================================================ */
+
+/* === ESTILO BASE PARA TODOS LOS SELECTS === */
+select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    padding-right: 45px !important;
+    background-color: #FFFFFF !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23588157' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    border: 2px solid var(--input-border) !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    width: 100% !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    min-height: 48px !important;
+}
+
+/* === Hover === */
+select:hover {
+    border-color: var(--color-primary) !important;
+}
+
+/* === Focus === */
+select:focus {
+    outline: 3px solid var(--input-focus) !important;
+    outline-offset: 2px !important;
+    border-color: var(--input-focus) !important;
+    box-shadow: 0 0 0 4px rgba(88, 129, 87, 0.15) !important;
+}
+
+/* === MANTENER LA FLECHA CUANDO ESTÁ VÁLIDO === */
+select:valid {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23588157' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    background-color: #FFFFFF !important;
+}
+
+/* === MANTENER LA FLECHA CUANDO ESTÁ INVÁLIDO === */
+select:invalid {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23588157' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    background-color: #FFFFFF !important;
+}
+
+/* === MODO DALTÓNICO === */
+body.modo-daltonico select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%237B4FC8' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    background-color: #FFFFFF !important;
+    border-color: var(--input-border) !important;
+}
+
+body.modo-daltonico select:hover {
+    border-color: var(--color-primary) !important;
+}
+
+body.modo-daltonico select:focus {
+    outline: 3px solid var(--input-focus) !important;
+    outline-offset: 2px !important;
+    border-color: var(--input-focus) !important;
+    box-shadow: 0 0 0 4px rgba(123, 79, 200, 0.15) !important;
+}
+
+/* === MODO DALTÓNICO - MANTENER FLECHA === */
+body.modo-daltonico select:valid {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%237B4FC8' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    background-color: #FFFFFF !important;
+}
+
+body.modo-daltonico select:invalid {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%237B4FC8' d='M7 10L1 4h12z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 14px !important;
+    background-color: #FFFFFF !important;
+}
+
+/* === Placeholder (opción por defecto) === */
+select option[value=""] {
+    color: var(--text-muted) !important;
+}
+
+select option {
+    color: var(--text-primary) !important;
+    background: #FFFFFF !important;
+}
+
+/* === Modo daltónico para options === */
+body.modo-daltonico select option[value=""] {
+    color: var(--text-muted) !important;
+}
+
+body.modo-daltonico select option {
+    color: var(--text-primary) !important;
+    background: #FFFFFF !important;
+}
+
+/* === TEXTO GRANDE === */
+body.texto-grande select {
+    font-size: 18px !important;
+    padding: 16px 20px !important;
+    min-height: 56px !important;
+    background-size: 18px !important;
+    background-position: right 16px center !important;
+}

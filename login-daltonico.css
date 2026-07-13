@@ -1,0 +1,141 @@
+/* ===== MODO DALTÓNICO (PALETA MORADA) ===== */
+
+body {
+    background: linear-gradient(135deg, #2D1B69 0%, #4A2C8A 50%, #7B4FC8 100%);
+}
+
+.login-card {
+    background: #D4D0F0;
+    border: 1px solid #B8A5E8;
+}
+
+.login-logo {
+    border: 2px solid #B8A5E8;
+}
+
+.login-header h1 {
+    color: #1A0E3E;
+}
+
+.login-header h1::after {
+    background: #7B4FC8;
+}
+
+.subtitulo {
+    color: #4A2C8A;
+}
+
+.form-group label {
+    color: #1A0E3E;
+}
+
+.form-group label i {
+    color: #7B4FC8;
+}
+
+.form-group input {
+    border: 2px solid #B8A5E8;
+    background: #FFFFFF;
+    color: #1A0E3E;
+}
+
+.form-group input:focus {
+    outline: 3px solid #7B4FC8;
+    border-color: #7B4FC8;
+    box-shadow: 0 0 0 4px rgba(123, 79, 200, 0.15);
+}
+
+.remember-me {
+    color: #1A0E3E;
+}
+
+.remember-me input[type="checkbox"] {
+    accent-color: #7B4FC8;
+}
+
+.forgot-password {
+    color: #5B3EA8;
+}
+
+.forgot-password:hover {
+    color: #4A2C8A;
+}
+
+.forgot-password:focus {
+    outline: 3px solid #7B4FC8;
+}
+
+.btn-login {
+    background: #7B4FC8;
+    color: #FFFFFF;
+    box-shadow: 0 4px 15px rgba(123, 79, 200, 0.3);
+}
+
+.btn-login:hover {
+    box-shadow: 0 8px 30px rgba(123, 79, 200, 0.4);
+    background: #4A2C8A;
+}
+
+.btn-login:focus {
+    outline: 3px solid #7B4FC8;
+}
+
+.register-link {
+    color: #4B5563;
+}
+
+.register-link a {
+    color: #5B3EA8;
+}
+
+.register-link a:hover {
+    color: #4A2C8A;
+}
+
+.register-link a:focus {
+    outline: 3px solid #7B4FC8;
+}
+
+.register-link a i {
+    color: #7B4FC8;
+}
+
+.accesibilidad-footer {
+    border-top: 2px solid #B8A5E8;
+}
+
+.switch-label {
+    color: #1A0E3E;
+}
+
+.switch-label i {
+    color: #7B4FC8;
+}
+
+.switch input:checked + .slider {
+    background-color: #7B4FC8;
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 0 3px #7B4FC8;
+}
+
+.toggle-password {
+    color: #6B7280;
+}
+
+.toggle-password:hover {
+    color: #7B4FC8;
+}
+
+.toggle-password:focus {
+    outline: 3px solid #7B4FC8;
+}
+
+.forgot-password i {
+    color: #7B4FC8;
+}
+
+.form-group input.error {
+    border-color: #E85C7B;
+}

@@ -1,0 +1,141 @@
+/* ===== MODO NORMAL (PALETA VERDE) ===== */
+
+body {
+    background: #344E41;
+}
+
+.login-card {
+    background: #DAD7CD;
+    border: 1px solid #A3B18A;
+}
+
+.login-logo {
+    border: 2px solid #A3B18A;
+}
+
+.login-header h1 {
+    color: #1B1B1B;
+}
+
+.login-header h1::after {
+    background: #588157;
+}
+
+.subtitulo {
+    color: #3A5A40;
+}
+
+.form-group label {
+    color: #1B1B1B;
+}
+
+.form-group label i {
+    color: #588157;
+}
+
+.form-group input {
+    border: 2px solid #A3B18A;
+    background: #FFFFFF;
+    color: #1B1B1B;
+}
+
+.form-group input:focus {
+    outline: 3px solid #588157;
+    border-color: #588157;
+    box-shadow: 0 0 0 4px rgba(88, 129, 87, 0.15);
+}
+
+.remember-me {
+    color: #1B1B1B;
+}
+
+.remember-me input[type="checkbox"] {
+    accent-color: #588157;
+}
+
+.forgot-password {
+    color: #588157;
+}
+
+.forgot-password:hover {
+    color: #3A5A40;
+}
+
+.forgot-password:focus {
+    outline: 3px solid #588157;
+}
+
+.btn-login {
+    background: #588157;
+    color: #FFFFFF;
+    box-shadow: 0 4px 15px rgba(88, 129, 87, 0.3);
+}
+
+.btn-login:hover {
+    box-shadow: 0 8px 30px rgba(88, 129, 87, 0.4);
+    background: #3A5A40;
+}
+
+.btn-login:focus {
+    outline: 3px solid #588157;
+}
+
+.register-link {
+    color: #4B5563;
+}
+
+.register-link a {
+    color: #588157;
+}
+
+.register-link a:hover {
+    color: #3A5A40;
+}
+
+.register-link a:focus {
+    outline: 3px solid #588157;
+}
+
+.register-link a i {
+    color: #C4A35A;
+}
+
+.accesibilidad-footer {
+    border-top: 2px solid #A3B18A;
+}
+
+.switch-label {
+    color: #1B1B1B;
+}
+
+.switch-label i {
+    color: #588157;
+}
+
+.switch input:checked + .slider {
+    background-color: #588157;
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 0 3px #588157;
+}
+
+.toggle-password {
+    color: #6B7280;
+}
+
+.toggle-password:hover {
+    color: #588157;
+}
+
+.toggle-password:focus {
+    outline: 3px solid #588157;
+}
+
+.forgot-password i {
+    color: #C4A35A;
+}
+
+.form-group input.error {
+    border-color: #FF6B35;
+}
