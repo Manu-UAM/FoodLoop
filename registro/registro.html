@@ -262,24 +262,24 @@
                             <label><i class="fas fa-location-dot" aria-hidden="true"></i> Dirección *</label>
                             <div class="direccion-grid">
                                 <div class="direccion-item">
-                                    <label for="calle" class="direccion-label">Calle</label>
+                                    <label for="calle" class="direccion-label">Calle *</label>
                                     <input type="text" id="calle" placeholder="Av. Reforma" required />
                                 </div>
                                 <div class="direccion-item">
-                                    <label for="numero" class="direccion-label">Número</label>
+                                    <label for="numero" class="direccion-label">Número *</label>
                                     <input type="text" id="numero" placeholder="123" required />
                                 </div>
                                 <div class="direccion-item">
-                                    <label for="colonia" class="direccion-label">Colonia</label>
-                                    <input type="text" id="colonia" placeholder="Centro" />
+                                    <label for="colonia" class="direccion-label">Colonia *</label>
+                                    <input type="text" id="colonia" placeholder="Centro" required />
                                 </div>
                                 <div class="direccion-item">
-                                    <label for="ciudad" class="direccion-label">Ciudad</label>
+                                    <label for="ciudad" class="direccion-label">Ciudad *</label>
                                     <input type="text" id="ciudad" placeholder="Ciudad de México" required />
                                 </div>
                                 <div class="direccion-item">
-                                    <label for="codigoPostal" class="direccion-label">CP</label>
-                                    <input type="text" id="codigoPostal" placeholder="06000" />
+                                    <label for="codigoPostal" class="direccion-label">CP *</label>
+                                    <input type="text" id="codigoPostal" placeholder="06000" required />
                                 </div>
                             </div>
                         </div>
@@ -315,13 +315,47 @@
                             </label>
                             <div class="horario-container">
                                 <div class="horario-item">
-                                    <label for="horarioApertura" class="horario-label">Apertura</label>
+                                    <label for="horarioApertura" class="horario-label">Apertura *</label>
                                     <input type="time" id="horarioApertura" required />
                                 </div>
                                 <div class="horario-item">
-                                    <label for="horarioCierre" class="horario-label">Cierre</label>
+                                    <label for="horarioCierre" class="horario-label">Cierre *</label>
                                     <input type="time" id="horarioCierre" required />
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- ===== NUEVO: TELÉFONO DEL LOCAL ===== -->
+                        <div class="form-group">
+                            <label for="telefonoLocal">
+                                <i class="fas fa-phone" aria-hidden="true"></i> Teléfono del local *
+                            </label>
+                            <input type="tel" id="telefonoLocal" placeholder="55 1234 5678" required aria-required="true" />
+                        </div>
+
+                        <!-- ===== NUEVO: WHATSAPP ===== -->
+                        <div class="form-group">
+                            <label class="checkbox-moderno" style="border: none; background: none; padding: 0;">
+                                <input type="checkbox" id="whatsappRestaurante" />
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i> 
+                                    Quiero recibir notificaciones por WhatsApp
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Campo de WhatsApp (aparece si se activa) -->
+                        <div id="whatsappRestauranteField" style="display: none;">
+                            <div class="form-group">
+                                <label for="telefonoWhatsappRestaurante">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i> Número de WhatsApp *
+                                </label>
+                                <input type="tel" id="telefonoWhatsappRestaurante" placeholder="55 1234 5678" />
+                                <p class="ayuda-texto">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    Este número debe tener WhatsApp para recibir notificaciones
+                                </p>
                             </div>
                         </div>
 
@@ -404,7 +438,7 @@
                             </div>
                         </div>
 
-                        <!-- ===== VERIFICACIÓN WHATSAPP (solo si está activado) ===== -->
+                        <!-- ===== VERIFICACIÓN WHATSAPP PARA CONSUMIDOR ===== -->
                         <div id="verificacionWhatsappContainer" style="display: none;">
                             <div class="verificacion-box">
                                 <div class="verificacion-header">
@@ -414,7 +448,7 @@
                                 <p class="verificacion-subtext">
                                     <i class="fas fa-info-circle" aria-hidden="true"></i>
                                     Hemos enviado un código de verificación al número
-                                    <strong id="telefonoMostrado">+34 600 000 000</strong>
+                                    <strong id="telefonoMostrado">+55 600 000 000</strong>
                                 </p>
                                 <div class="form-group">
                                     <label for="codigoVerificacion">
@@ -432,11 +466,50 @@
                                         Código incorrecto. Intenta nuevamente.
                                     </div>
                                 </div>
-                                <button type="button" class="btn-reenviar" id="btnReenviarCodigo">
+                                <button type="button" class="btn-reenviar" id="btnReenviar">
                                     <i class="fas fa-redo" aria-hidden="true"></i>
                                     ¿No te llegó el código? Enviar otra vez
                                 </button>
                                 <p class="reenviar-mensaje" id="reenviarMensaje" style="display: none; color: #588157; font-size: 13px; margin-top: 6px;">
+                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                    ¡Código reenviado! Revisa tu WhatsApp.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- ===== VERIFICACIÓN WHATSAPP (solo si está activado) ===== -->
+                        <div id="verificacionWhatsappRestauranteContainer" style="display: none;">
+                            <div class="verificacion-box">
+                                <div class="verificacion-header">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                    <span>Verificación por WhatsApp</span>
+                                </div>
+                                <p class="verificacion-subtext">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    Hemos enviado un código de verificación al número
+                                    <strong id="telefonoRestauranteMostrado">+55 600 000 000</strong>
+                                </p>
+                                <div class="form-group">
+                                    <label for="codigoVerificacionRestaurante">
+                                        <i class="fas fa-key" aria-hidden="true"></i> Código de verificación *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="codigoVerificacionRestaurante" 
+                                        placeholder="Ingresa el código de 6 dígitos" 
+                                        maxlength="6"
+                                        autocomplete="off"
+                                    />
+                                    <div class="codigo-error" id="codigoErrorRestaurante" style="display: none; color: #FF6B35; font-size: 13px; margin-top: 4px;">
+                                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                        Código incorrecto. Intenta nuevamente.
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-reenviar" id="btnReenviarCodigoRestaurante">
+                                    <i class="fas fa-redo" aria-hidden="true"></i>
+                                    ¿No te llegó el código? Enviar otra vez
+                                </button>
+                                <p class="reenviar-mensaje" id="reenviarMensajeRestaurante" style="display: none; color: #588157; font-size: 13px; margin-top: 6px;">
                                     <i class="fas fa-check-circle" aria-hidden="true"></i>
                                     ¡Código reenviado! Revisa tu WhatsApp.
                                 </p>

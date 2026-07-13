@@ -16,6 +16,7 @@ let currentStep = 1;
 let tipoUsuario = null;
 let fotoSubida = false;
 let codigoVerificado = false;
+let codigoRestauranteVerificado = false;
 let contadorRedireccion = 5;
 
 const step1 = document.getElementById('step1');
@@ -34,7 +35,7 @@ const fotoLocalContainer = document.getElementById('fotoLocalContainer');
 // ===== TIPO DE USUARIO =====
 const tipoCards = document.querySelectorAll('.tipo-usuario-card');
 
-// ===== ELEMENTOS DE VERIFICACIÓN WHATSAPP =====
+// ===== ELEMENTOS DE VERIFICACIÓN WHATSAPP (CONSUMIDOR) =====
 const verificacionContainer = document.getElementById('verificacionWhatsappContainer');
 const telefonoMostrado = document.getElementById('telefonoMostrado');
 const codigoInput = document.getElementById('codigoVerificacion');
@@ -42,6 +43,15 @@ const codigoError = document.getElementById('codigoError');
 const btnReenviar = document.getElementById('btnReenviar');
 const reenviarMensaje = document.getElementById('reenviarMensaje');
 const CODIGO_SIMULADO = '123456';
+
+// ===== ELEMENTOS DE VERIFICACIÓN WHATSAPP (RESTAURANTE) =====
+const verificacionRestauranteContainer = document.getElementById('verificacionWhatsappRestauranteContainer');
+const telefonoRestauranteMostrado = document.getElementById('telefonoRestauranteMostrado');
+const codigoRestauranteInput = document.getElementById('codigoVerificacionRestaurante');
+const codigoRestauranteError = document.getElementById('codigoErrorRestaurante');
+const btnReenviarRestaurante = document.getElementById('btnReenviarCodigoRestaurante');
+const reenviarMensajeRestaurante = document.getElementById('reenviarMensajeRestaurante');
+const CODIGO_SIMULADO_RESTAURANTE = '123456';
 
 // ===== MODAL DE ÉXITO =====
 const modalExito = document.getElementById('modalExito');
@@ -192,6 +202,23 @@ function updateStepUI() {
         }
     }
 
+    // Mostrar verificación de WhatsApp para consumidor en paso 4
+    if (currentStep === 4 && tipoUsuario === 'consumidor') {
+        const whatsappCheck = document.getElementById('notificacionWhatsapp');
+        const telefonoInput = document.getElementById('telefonoWhatsapp');
+    if (whatsappCheck && whatsappCheck.checked && telefonoInput && telefonoInput.value.trim().length >= 10) {
+        mostrarVerificacionWhatsApp();
+    }
+}
+    // Mostrar verificación de WhatsApp para restaurante en paso 4
+    if (currentStep === 4 && tipoUsuario === 'restaurante') {
+        mostrarVerificacionWhatsAppRestaurante();
+    } else {
+        if (verificacionRestauranteContainer) {
+            verificacionRestauranteContainer.style.display = 'none';
+        }
+    }
+
     document.querySelectorAll('.step-buttons, .step1-buttons, .step3a-buttons').forEach(el => {
         el.style.display = 'none';
     });
@@ -211,7 +238,6 @@ function updateStepUI() {
 
     actualizarBotonSubmit();
 
-    // Mover el foco al primer campo del paso
     setTimeout(() => {
         const primerInput = document.querySelector(`.step-content.active input:not([type="hidden"]), .step-content.active select`);
         if (primerInput) {
@@ -233,10 +259,8 @@ function goToStep(step) {
 // ================================================================
 function mostrarErrorCampo(input, mensaje) {
     input.classList.add('error');
-    // Eliminar mensaje de error previo
     const existingError = input.parentElement.querySelector('.error-message');
     if (existingError) existingError.remove();
-    // Crear nuevo mensaje
     const errorMsg = document.createElement('span');
     errorMsg.className = 'error-message';
     errorMsg.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${mensaje}`;
@@ -257,7 +281,6 @@ function validateStep1() {
     const passwordConfirm = document.getElementById('password_confirm');
     let hasError = false;
 
-    // Limpiar errores previos
     [nombre, apellido, email, password, passwordConfirm].forEach(limpiarErrorCampo);
 
     if (!nombre.value || nombre.value.trim().length < 2) {
@@ -286,7 +309,6 @@ function validateStep1() {
     }
 
     if (hasError) {
-        // Encontrar el primer campo con error y enfocarlo
         const primerError = document.querySelector('.form-group input.error');
         if (primerError) primerError.focus();
         return false;
@@ -307,14 +329,19 @@ function validateStep3Restaurante() {
     const regionRest = document.getElementById('regionRestaurante');
     const calle = document.getElementById('calle');
     const numero = document.getElementById('numero');
+    const colonia = document.getElementById('colonia');
     const ciudad = document.getElementById('ciudad');
+    const codigoPostal = document.getElementById('codigoPostal');
     const categoria = document.getElementById('categoria');
     const horarioApertura = document.getElementById('horarioApertura');
     const horarioCierre = document.getElementById('horarioCierre');
+    const telefonoLocal = document.getElementById('telefonoLocal');
+    const whatsappRestaurante = document.getElementById('whatsappRestaurante');
+    const telefonoWhatsappRestaurante = document.getElementById('telefonoWhatsappRestaurante');
+    
     let hasError = false;
 
-    // Limpiar errores previos
-    [nombreRest, regionRest, calle, numero, ciudad, categoria, horarioApertura, horarioCierre].forEach(limpiarErrorCampo);
+    [nombreRest, regionRest, calle, numero, colonia, ciudad, codigoPostal, categoria, horarioApertura, horarioCierre, telefonoLocal, telefonoWhatsappRestaurante].forEach(limpiarErrorCampo);
 
     if (!nombreRest.value || nombreRest.value.trim().length < 2) {
         mostrarErrorCampo(nombreRest, 'El nombre del restaurante es obligatorio');
@@ -336,8 +363,18 @@ function validateStep3Restaurante() {
         hasError = true;
     }
 
+    if (!colonia.value || colonia.value.trim().length < 2) {
+        mostrarErrorCampo(colonia, 'La colonia es obligatoria');
+        hasError = true;
+    }
+
     if (!ciudad.value || ciudad.value.trim().length < 2) {
         mostrarErrorCampo(ciudad, 'La ciudad es obligatoria');
+        hasError = true;
+    }
+
+    if (!codigoPostal.value || codigoPostal.value.trim().length < 3) {
+        mostrarErrorCampo(codigoPostal, 'El código postal es obligatorio');
         hasError = true;
     }
 
@@ -365,6 +402,20 @@ function validateStep3Restaurante() {
         hasError = true;
     }
 
+    // Teléfono local - mínimo 10 dígitos
+    if (!telefonoLocal.value || telefonoLocal.value.trim().length < 10) {
+        mostrarErrorCampo(telefonoLocal, 'Ingresa un número de teléfono válido (mínimo 10 dígitos)');
+        hasError = true;
+    }
+
+    // WhatsApp si está activado - mínimo 10 dígitos
+    if (whatsappRestaurante && whatsappRestaurante.checked) {
+        if (!telefonoWhatsappRestaurante || !telefonoWhatsappRestaurante.value || telefonoWhatsappRestaurante.value.trim().length < 10) {
+            mostrarErrorCampo(telefonoWhatsappRestaurante, 'Ingresa un número de WhatsApp válido (mínimo 10 dígitos)');
+            hasError = true;
+        }
+    }
+
     if (hasError) {
         const primerError = document.querySelector('.form-group input.error, .form-group select.error');
         if (primerError) primerError.focus();
@@ -377,29 +428,46 @@ function validateStep3Restaurante() {
 // FUNCIONES DE NAVEGACIÓN (NEXT / PREV / SKIP)
 // ================================================================
 function nextStep() {
+    console.log('🔍 nextStep() - Paso actual:', currentStep);
+    console.log('🔍 Tipo de usuario:', tipoUsuario);
 
+    // ===== VALIDACIÓN WHATSAPP PARA CONSUMIDOR (SOLO NÚMERO, NO CÓDIGO) =====
     if (currentStep === 3 && tipoUsuario === 'consumidor') {
         const whatsappCheck = document.getElementById('notificacionWhatsapp');
         const telefonoInput = document.getElementById('telefonoWhatsapp');
         
         if (whatsappCheck && whatsappCheck.checked) {
-            if (!telefonoInput || !telefonoInput.value || telefonoInput.value.trim().length < 6) {
-                alert('⚠️ Para recibir notificaciones por WhatsApp, debes ingresar un número de teléfono válido.\n\nDesmarca la opción de WhatsApp o presiona el botón "Omitir" si no deseseas recibir notificaciones por Whatsapp.');
+            // Solo validar que haya un número válido (mínimo 10 dígitos)
+            if (!telefonoInput || !telefonoInput.value || telefonoInput.value.trim().length < 10) {
+                alert('⚠️ Para recibir notificaciones por WhatsApp, debes ingresar un número de teléfono válido (mínimo 10 dígitos).\n\nDesmarca la opción de WhatsApp o presiona el botón "Omitir" si no deseas recibir notificaciones.');
                 if (telefonoInput) {
                     telefonoInput.focus();
-                    mostrarErrorCampo(telefonoInput, 'Ingresa un número de teléfono válido');
+                    mostrarErrorCampo(telefonoInput, 'Ingresa un número de teléfono válido (mínimo 10 dígitos)');
                 }
                 return;
             }
             limpiarErrorCampo(telefonoInput);
+            // El código se validará en el paso 4 (Confirmación)
         }
     }
 
-    if (currentStep === 1 && !validateStep1()) return;
-    if (currentStep === 2 && !validateStep2()) return;
-    if (currentStep === 3 && tipoUsuario === 'restaurante' && !validateStep3Restaurante()) return;
+    // ===== VALIDACIONES POR PASO =====
+    if (currentStep === 1 && !validateStep1()) {
+        console.log('❌ validateStep1() falló');
+        return;
+    }
+    if (currentStep === 2 && !validateStep2()) {
+        console.log('❌ validateStep2() falló');
+        return;
+    }
+    if (currentStep === 3 && tipoUsuario === 'restaurante' && !validateStep3Restaurante()) {
+        console.log('❌ validateStep3Restaurante() falló');
+        return;
+    }
 
+    // ===== AVANZAR AL SIGUIENTE PASO =====
     if (currentStep < 4) {
+        console.log('✅ Avanzando al paso:', currentStep + 1);
         goToStep(currentStep + 1);
     }
 }
@@ -412,22 +480,17 @@ function prevStep() {
 
 function omitirStep3() {
     if (currentStep === 3 && tipoUsuario === 'consumidor') {
-        // Desmarcar WhatsApp si está activado
         const whatsappCheck = document.getElementById('notificacionWhatsapp');
         if (whatsappCheck && whatsappCheck.checked) {
             whatsappCheck.checked = false;
-            // Ocultar el campo de teléfono
             const whatsappField = document.getElementById('whatsappField');
             if (whatsappField) whatsappField.style.display = 'none';
-            // Limpiar el campo de teléfono
             const telefonoInput = document.getElementById('telefonoWhatsapp');
             if (telefonoInput) {
                 telefonoInput.value = '';
                 telefonoInput.required = false;
                 limpiarErrorCampo(telefonoInput);
             }
-            // Ocultar verificación
-            const verificacionContainer = document.getElementById('verificacionWhatsappContainer');
             if (verificacionContainer) verificacionContainer.style.display = 'none';
             codigoVerificado = false;
             actualizarBotonSubmit();
@@ -437,16 +500,14 @@ function omitirStep3() {
 }
 
 // ================================================================
-// SELECCIÓN DE TIPO DE USUARIO (CON ACCESIBILIDAD)
+// SELECCIÓN DE TIPO DE USUARIO
 // ================================================================
 if (tipoCards) {
     tipoCards.forEach(card => {
-        // Click
         card.addEventListener('click', function() {
             seleccionarTipoUsuario(this);
         });
 
-        // Teclado (Enter/Space)
         card.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -454,7 +515,6 @@ if (tipoCards) {
             }
         });
 
-        // Hacer focusable
         card.setAttribute('tabindex', '0');
         card.setAttribute('role', 'radio');
     });
@@ -465,7 +525,6 @@ function seleccionarTipoUsuario(card) {
     card.classList.add('selected');
     tipoUsuario = card.dataset.tipo;
 
-    // Actualizar atributo ARIA
     tipoCards.forEach(c => c.setAttribute('aria-checked', 'false'));
     card.setAttribute('aria-checked', 'true');
 
@@ -477,10 +536,37 @@ function seleccionarTipoUsuario(card) {
             step3Label.textContent = 'Restaurante';
         }
     }
+
+    // ===== LIMPIAR CAMPOS DEL CONSUMIDOR AL CAMBIAR A RESTAURANTE =====
+    if (tipoUsuario === 'restaurante') {
+        // Desmarcar WhatsApp del consumidor
+        const whatsappCheck = document.getElementById('notificacionWhatsapp');
+        if (whatsappCheck) {
+            whatsappCheck.checked = false;
+        }
+        // Ocultar campo de WhatsApp
+        const whatsappField = document.getElementById('whatsappField');
+        if (whatsappField) {
+            whatsappField.style.display = 'none';
+        }
+        // Limpiar número de teléfono
+        const telefonoInput = document.getElementById('telefonoWhatsapp');
+        if (telefonoInput) {
+            telefonoInput.value = '';
+            telefonoInput.required = false;
+            limpiarErrorCampo(telefonoInput);
+        }
+        // Ocultar verificación
+        if (verificacionContainer) {
+            verificacionContainer.style.display = 'none';
+        }
+        codigoVerificado = false;
+        actualizarBotonSubmit();
+    }
 }
 
 // ================================================================
-// NOTIFICACIONES: Mostrar campo de WhatsApp
+// NOTIFICACIONES: Mostrar campo de WhatsApp (CONSUMIDOR)
 // ================================================================
 const notificacionWhatsapp = document.getElementById('notificacionWhatsapp');
 const whatsappField = document.getElementById('whatsappField');
@@ -489,24 +575,30 @@ const telefonoWhatsapp = document.getElementById('telefonoWhatsapp');
 if (notificacionWhatsapp) {
     notificacionWhatsapp.addEventListener('change', function() {
         if (this.checked) {
+            // Mostrar campo de teléfono
             if (whatsappField) whatsappField.style.display = 'block';
-            if (telefonoWhatsapp) telefonoWhatsapp.required = true;
-            // Enfocar el campo de teléfono
-            setTimeout(() => {
-                if (telefonoWhatsapp) telefonoWhatsapp.focus();
-            }, 300);
+            if (telefonoWhatsapp) {
+                telefonoWhatsapp.required = true;
+                setTimeout(() => {
+                    if (telefonoWhatsapp) telefonoWhatsapp.focus();
+                }, 300);
+            }
         } else {
+            // Ocultar campo de teléfono
             if (whatsappField) whatsappField.style.display = 'none';
             if (telefonoWhatsapp) {
                 telefonoWhatsapp.required = false;
+                telefonoWhatsapp.value = '';
                 limpiarErrorCampo(telefonoWhatsapp);
             }
+            // Ocultar verificación
             if (verificacionContainer) verificacionContainer.style.display = 'none';
             if (codigoInput) {
                 codigoInput.value = '';
                 limpiarErrorCampo(codigoInput);
                 codigoInput.style.borderColor = '';
                 codigoInput.style.outline = '';
+                codigoInput.classList.remove('verificado');
             }
             if (codigoError) codigoError.style.display = 'none';
             codigoVerificado = false;
@@ -578,7 +670,6 @@ if (btnInfo && modal) {
     btnInfo.addEventListener('click', function() {
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        // Enfocar el botón de cerrar
         setTimeout(() => {
             if (btnClose) btnClose.focus();
         }, 100);
@@ -589,7 +680,6 @@ if (btnClose && modal) {
     btnClose.addEventListener('click', function() {
         modal.classList.remove('active');
         document.body.style.overflow = '';
-        // Volver el foco al botón de información
         if (btnInfo) btnInfo.focus();
     });
 }
@@ -603,7 +693,6 @@ if (modal) {
         }
     });
 
-    // Cerrar con Escape
     modal.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             modal.classList.remove('active');
@@ -614,14 +703,13 @@ if (modal) {
 }
 
 // ================================================================
-// VERIFICACIÓN WHATSAPP
+// VERIFICACIÓN WHATSAPP (CONSUMIDOR)
 // ================================================================
-
 function mostrarVerificacionWhatsApp() {
     const whatsappActivado = document.getElementById('notificacionWhatsapp');
     const telefono = document.getElementById('telefonoWhatsapp');
 
-    if (whatsappActivado && whatsappActivado.checked && telefono && telefono.value.trim().length >= 6) {
+    if (whatsappActivado && whatsappActivado.checked && telefono && telefono.value.trim().length >= 10) {
         if (verificacionContainer) verificacionContainer.style.display = 'block';
         if (telefonoMostrado) telefonoMostrado.textContent = telefono.value.trim();
         if (codigoInput) {
@@ -642,10 +730,9 @@ function mostrarVerificacionWhatsApp() {
 
 if (telefonoWhatsapp) {
     telefonoWhatsapp.addEventListener('input', function() {
-        // Limpiar error al escribir
         limpiarErrorCampo(this);
 
-        if (this.value.trim().length >= 6) {
+        if (this.value.trim().length >= 10) {
             mostrarVerificacionWhatsApp();
         } else {
             if (verificacionContainer) verificacionContainer.style.display = 'none';
@@ -657,10 +744,8 @@ if (telefonoWhatsapp) {
 
 if (codigoInput) {
     codigoInput.addEventListener('input', function() {
-        // Solo permitir dígitos
         this.value = this.value.replace(/\D/g, '');
 
-        // Limpiar estado previo
         limpiarErrorCampo(this);
         this.classList.remove('verificado');
         if (codigoError) codigoError.style.display = 'none';
@@ -670,14 +755,17 @@ if (codigoInput) {
                 this.classList.add('verificado');
                 codigoVerificado = true;
                 if (codigoError) codigoError.style.display = 'none';
+                console.log('✅ Código WhatsApp consumidor verificado');
+                actualizarBotonSubmit();
             } else {
                 mostrarErrorCampo(this, 'Código incorrecto. Intenta nuevamente.');
                 codigoVerificado = false;
+                actualizarBotonSubmit();
             }
         } else {
             codigoVerificado = false;
+            actualizarBotonSubmit();
         }
-        actualizarBotonSubmit();
     });
 }
 
@@ -686,7 +774,6 @@ if (btnReenviar) {
         this.disabled = true;
         if (reenviarMensaje) reenviarMensaje.style.display = 'block';
 
-        // Limpiar código anterior
         if (codigoInput) {
             codigoInput.value = '';
             limpiarErrorCampo(codigoInput);
@@ -709,6 +796,102 @@ if (btnReenviar) {
 }
 
 // ================================================================
+// VERIFICACIÓN WHATSAPP (RESTAURANTE) - Se muestra en el paso 4
+// ================================================================
+function mostrarVerificacionWhatsAppRestaurante() {
+    const whatsappCheck = document.getElementById('whatsappRestaurante');
+    const telefonoInput = document.getElementById('telefonoWhatsappRestaurante');
+
+    if (whatsappCheck && whatsappCheck.checked && telefonoInput && telefonoInput.value.trim().length >= 10) {
+        if (verificacionRestauranteContainer) {
+            verificacionRestauranteContainer.style.display = 'block';
+        }
+        if (telefonoRestauranteMostrado) {
+            telefonoRestauranteMostrado.textContent = telefonoInput.value.trim();
+        }
+        if (codigoRestauranteInput) {
+            codigoRestauranteInput.value = '';
+            limpiarErrorCampo(codigoRestauranteInput);
+            codigoRestauranteInput.style.borderColor = '';
+            codigoRestauranteInput.style.outline = '';
+            codigoRestauranteInput.classList.remove('verificado');
+        }
+        if (codigoRestauranteError) {
+            codigoRestauranteError.style.display = 'none';
+        }
+        codigoRestauranteVerificado = false;
+    } else {
+        if (verificacionRestauranteContainer) {
+            verificacionRestauranteContainer.style.display = 'none';
+        }
+        codigoRestauranteVerificado = false;
+    }
+}
+
+if (codigoRestauranteInput) {
+    codigoRestauranteInput.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '');
+
+        limpiarErrorCampo(this);
+        this.classList.remove('verificado');
+        if (codigoRestauranteError) {
+            codigoRestauranteError.style.display = 'none';
+        }
+
+        if (this.value.length === 6) {
+            if (this.value === CODIGO_SIMULADO_RESTAURANTE) {
+                this.classList.add('verificado');
+                codigoRestauranteVerificado = true;
+                if (codigoRestauranteError) {
+                    codigoRestauranteError.style.display = 'none';
+                }
+                console.log('✅ Código WhatsApp restaurante verificado');
+                actualizarBotonSubmit();
+            } else {
+                mostrarErrorCampo(this, 'Código incorrecto. Intenta nuevamente.');
+                codigoRestauranteVerificado = false;
+                actualizarBotonSubmit();
+            }
+        } else {
+            codigoRestauranteVerificado = false;
+            actualizarBotonSubmit();
+        }
+    });
+}
+
+if (btnReenviarRestaurante) {
+    btnReenviarRestaurante.addEventListener('click', function() {
+        this.disabled = true;
+        if (reenviarMensajeRestaurante) {
+            reenviarMensajeRestaurante.style.display = 'block';
+        }
+
+        if (codigoRestauranteInput) {
+            codigoRestauranteInput.value = '';
+            limpiarErrorCampo(codigoRestauranteInput);
+            codigoRestauranteInput.classList.remove('verificado');
+            codigoRestauranteInput.style.borderColor = '';
+            codigoRestauranteInput.style.outline = '';
+            codigoRestauranteInput.focus();
+        }
+        if (codigoRestauranteError) {
+            codigoRestauranteError.style.display = 'none';
+        }
+        codigoRestauranteVerificado = false;
+        actualizarBotonSubmit();
+
+        setTimeout(() => {
+            this.disabled = false;
+            setTimeout(() => {
+                if (reenviarMensajeRestaurante) {
+                    reenviarMensajeRestaurante.style.display = 'none';
+                }
+            }, 3000);
+        }, 2000);
+    });
+}
+
+// ================================================================
 // BOTÓN "CREAR CUENTA" HABILITADO
 // ================================================================
 const terminosCheck = document.getElementById('terminos');
@@ -723,8 +906,17 @@ function actualizarBotonSubmit() {
         let codigoOk = true;
         const whatsappActivado = document.getElementById('notificacionWhatsapp');
 
-        if (whatsappActivado && whatsappActivado.checked && telefonoWhatsapp && telefonoWhatsapp.value.trim().length >= 6) {
+        if (whatsappActivado && whatsappActivado.checked && telefonoWhatsapp && telefonoWhatsapp.value.trim().length >= 10) {
             codigoOk = codigoVerificado;
+        }
+
+        // Verificación para restaurante
+        if (tipoUsuario === 'restaurante') {
+            const whatsappRestCheck = document.getElementById('whatsappRestaurante');
+            const telefonoWhatsappRest = document.getElementById('telefonoWhatsappRestaurante');
+            if (whatsappRestCheck && whatsappRestCheck.checked && telefonoWhatsappRest && telefonoWhatsappRest.value.trim().length >= 10) {
+                codigoOk = codigoRestauranteVerificado;
+            }
         }
 
         const todosOk = terminosOk && codigoOk;
@@ -764,7 +956,6 @@ function mostrarModalExito(tipoTexto, email) {
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
 
-        // Iniciar contador
         contadorRedireccion = 30;
         if (contadorElemento) {
             contadorElemento.textContent = `Redirigiendo en ${contadorRedireccion} segundos...`;
@@ -777,7 +968,6 @@ function mostrarModalExito(tipoTexto, email) {
             }
             if (contadorRedireccion <= 0) {
                 clearInterval(intervalo);
-                // Redirigir al login con el email prellenado
                 const emailInput = document.getElementById('email');
                 if (emailInput) {
                     window.location.href = `../login.html?email=${encodeURIComponent(emailInput.value)}`;
@@ -787,7 +977,6 @@ function mostrarModalExito(tipoTexto, email) {
             }
         }, 1000);
 
-        // Guardar el intervalo para limpiarlo si el usuario hace clic en el botón
         window._intervaloRedireccion = intervalo;
     }
 }
@@ -808,7 +997,6 @@ if (btnIrLogin) {
     btnIrLogin.addEventListener('click', cerrarModalExitoYRedirigir);
 }
 
-// Cerrar modal con Escape
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         const modal = document.getElementById('modalExito');
@@ -953,6 +1141,41 @@ function inicializarRegistro() {
 }
 
 // ================================================================
+// WHATSAPP PARA RESTAURANTES - Mostrar/ocultar campo
+// ================================================================
+const whatsappRestaurante = document.getElementById('whatsappRestaurante');
+const whatsappRestauranteField = document.getElementById('whatsappRestauranteField');
+const telefonoWhatsappRestaurante = document.getElementById('telefonoWhatsappRestaurante');
+
+if (whatsappRestaurante) {
+    whatsappRestaurante.addEventListener('change', function() {
+        if (this.checked) {
+            if (whatsappRestauranteField) {
+                whatsappRestauranteField.style.display = 'block';
+            }
+            if (telefonoWhatsappRestaurante) {
+                telefonoWhatsappRestaurante.required = true;
+                setTimeout(() => telefonoWhatsappRestaurante.focus(), 300);
+            }
+        } else {
+            if (whatsappRestauranteField) {
+                whatsappRestauranteField.style.display = 'none';
+            }
+            if (telefonoWhatsappRestaurante) {
+                telefonoWhatsappRestaurante.required = false;
+                telefonoWhatsappRestaurante.value = '';
+                limpiarErrorCampo(telefonoWhatsappRestaurante);
+            }
+            if (verificacionRestauranteContainer) {
+                verificacionRestauranteContainer.style.display = 'none';
+            }
+            codigoRestauranteVerificado = false;
+            actualizarBotonSubmit();
+        }
+    });
+}
+
+// ================================================================
 // ENVÍO DEL FORMULARIO
 // ================================================================
 const registroForm = document.getElementById('registroForm');
@@ -967,9 +1190,11 @@ if (registroForm) {
             return;
         }
 
+        // Validación WhatsApp para consumidor
         if (notificacionWhatsapp && notificacionWhatsapp.checked) {
-            if (!telefonoWhatsapp || !telefonoWhatsapp.value || telefonoWhatsapp.value.trim().length < 6) {
-                if (telefonoWhatsapp) mostrarErrorCampo(telefonoWhatsapp, 'Ingresa un número de teléfono válido');
+            if (!telefonoWhatsapp || !telefonoWhatsapp.value || telefonoWhatsapp.value.trim().length < 10) {
+                if (telefonoWhatsapp) mostrarErrorCampo(telefonoWhatsapp, 'Ingresa un número de teléfono válido (mínimo 10 dígitos)');
+                alert('⚠️ Ingresa un número de teléfono válido (mínimo 10 dígitos) para WhatsApp.');
                 return;
             }
             if (telefonoWhatsapp) limpiarErrorCampo(telefonoWhatsapp);
@@ -977,7 +1202,35 @@ if (registroForm) {
             if (!codigoVerificado) {
                 if (codigoInput) mostrarErrorCampo(codigoInput, 'Verifica el código enviado a tu WhatsApp');
                 if (codigoError) codigoError.style.display = 'block';
+                alert('⚠️ Debes verificar tu número de WhatsApp con el código enviado.');
                 return;
+            }
+        }
+
+        // Validación WhatsApp para restaurante
+        if (tipoUsuario === 'restaurante') {
+            const whatsappCheck = document.getElementById('whatsappRestaurante');
+            const telefonoWhatsappRest = document.getElementById('telefonoWhatsappRestaurante');
+            
+            if (whatsappCheck && whatsappCheck.checked) {
+                if (!telefonoWhatsappRest || !telefonoWhatsappRest.value || telefonoWhatsappRest.value.trim().length < 10) {
+                    alert('⚠️ Para recibir notificaciones por WhatsApp, debes ingresar un número de teléfono válido (mínimo 10 dígitos).');
+                    if (telefonoWhatsappRest) {
+                        telefonoWhatsappRest.focus();
+                        mostrarErrorCampo(telefonoWhatsappRest, 'Ingresa un número de WhatsApp válido (mínimo 10 dígitos)');
+                    }
+                    return;
+                }
+                
+                if (!codigoRestauranteVerificado) {
+                    alert('⚠️ Debes verificar tu número de WhatsApp con el código enviado.');
+                    if (codigoRestauranteInput) {
+                        codigoRestauranteInput.focus();
+                        mostrarErrorCampo(codigoRestauranteInput, 'Verifica el código enviado a tu WhatsApp');
+                    }
+                    if (codigoRestauranteError) codigoRestauranteError.style.display = 'block';
+                    return;
+                }
             }
         }
 
@@ -1022,6 +1275,10 @@ if (registroForm) {
             }
             datos.horarioApertura = document.getElementById('horarioApertura') ? document.getElementById('horarioApertura').value : '';
             datos.horarioCierre = document.getElementById('horarioCierre') ? document.getElementById('horarioCierre').value : '';
+            datos.telefonoLocal = document.getElementById('telefonoLocal') ? document.getElementById('telefonoLocal').value : '';
+            const whatsappCheck = document.getElementById('whatsappRestaurante');
+            const telefonoWhatsappRest = document.getElementById('telefonoWhatsappRestaurante');
+            datos.whatsappRestaurante = (whatsappCheck && whatsappCheck.checked && telefonoWhatsappRest) ? telefonoWhatsappRest.value : '';
         }
 
         console.log('=== REGISTRO COMPLETO ===');
@@ -1044,10 +1301,27 @@ if (registroForm) {
         if (datos.email && datos.email.includes('@')) {
             /*try {
                 const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
+                
+                let telefono = 'No especificado';
+                let whatsapp = 'No especificado';
+                
+                if (tipoUsuario === 'restaurante') {
+                    const telefonoLocal = document.getElementById('telefonoLocal');
+                    const telefonoWhatsappRest = document.getElementById('telefonoWhatsappRestaurante');
+                    const whatsappCheck = document.getElementById('whatsappRestaurante');
+                    
+                    if (telefonoLocal) telefono = telefonoLocal.value || 'No especificado';
+                    if (whatsappCheck && whatsappCheck.checked && telefonoWhatsappRest) {
+                        whatsapp = telefonoWhatsappRest.value || 'No especificado';
+                    }
+                }
+                
                 const emailEnviado = await enviarCorreoBienvenida(
                     nombreCompleto,
                     datos.email,
-                    datos.tipoUsuario
+                    datos.tipoUsuario,
+                    telefono,
+                    whatsapp
                 );
                 
                 if (emailEnviado) {
@@ -1059,7 +1333,7 @@ if (registroForm) {
                 console.error('❌ Error en el envío del correo:', error);
             }
             */
-            console.log('📧 EmailJS desactivado para pruebas - No se envió correo');
+           console.log('✅ Simulación de correo enviado. Api deshabilitado.');
         } else {
             console.warn('⚠️ Correo no válido, no se envió mensaje');
         }

@@ -1,11 +1,13 @@
 emailjs.init('NUeNWLT_mmwIf0ky0');
 
-async function enviarCorreoBienvenida(nombre, email, tipo) {
+async function enviarCorreoBienvenida(nombre, email, tipo, telefono, whatsapp) {
     try {
         const templateParams = {
             nombre: nombre,
             tipo: tipo === 'consumidor' ? 'Consumidor' : 'Restaurante',
-            to_email: email 
+            to_email: email,
+            telefono: telefono || 'No especificado',
+            whatsapp: whatsapp || 'No especificado'
         };
 
         const response = await emailjs.send(
@@ -15,11 +17,11 @@ async function enviarCorreoBienvenida(nombre, email, tipo) {
         );
 
         console.log('✅ Correo de bienvenida enviado a:', email);
-        console.log('Respuesta:', response);
+        console.log('📞 Teléfono:', telefono);
+        console.log('📱 WhatsApp:', whatsapp);
         return true;
     } catch (error) {
         console.error('❌ Error al enviar correo:', error);
-        console.error('Detalle:', error.text);
         return false;
     }
 }
