@@ -377,6 +377,24 @@ function validateStep3Restaurante() {
 // FUNCIONES DE NAVEGACIÓN (NEXT / PREV / SKIP)
 // ================================================================
 function nextStep() {
+
+    if (currentStep === 3 && tipoUsuario === 'consumidor') {
+        const whatsappCheck = document.getElementById('notificacionWhatsapp');
+        const telefonoInput = document.getElementById('telefonoWhatsapp');
+        
+        if (whatsappCheck && whatsappCheck.checked) {
+            if (!telefonoInput || !telefonoInput.value || telefonoInput.value.trim().length < 6) {
+                alert('⚠️ Para recibir notificaciones por WhatsApp, debes ingresar un número de teléfono válido.\n\nSi no deseas recibir notificaciones, desmarca la opción de WhatsApp.');
+                if (telefonoInput) {
+                    telefonoInput.focus();
+                    mostrarErrorCampo(telefonoInput, 'Ingresa un número de teléfono válido');
+                }
+                return;
+            }
+            limpiarErrorCampo(telefonoInput);
+        }
+    }
+
     if (currentStep === 1 && !validateStep1()) return;
     if (currentStep === 2 && !validateStep2()) return;
     if (currentStep === 3 && tipoUsuario === 'restaurante' && !validateStep3Restaurante()) return;
@@ -394,6 +412,26 @@ function prevStep() {
 
 function omitirStep3() {
     if (currentStep === 3 && tipoUsuario === 'consumidor') {
+        // Desmarcar WhatsApp si está activado
+        const whatsappCheck = document.getElementById('notificacionWhatsapp');
+        if (whatsappCheck && whatsappCheck.checked) {
+            whatsappCheck.checked = false;
+            // Ocultar el campo de teléfono
+            const whatsappField = document.getElementById('whatsappField');
+            if (whatsappField) whatsappField.style.display = 'none';
+            // Limpiar el campo de teléfono
+            const telefonoInput = document.getElementById('telefonoWhatsapp');
+            if (telefonoInput) {
+                telefonoInput.value = '';
+                telefonoInput.required = false;
+                limpiarErrorCampo(telefonoInput);
+            }
+            // Ocultar verificación
+            const verificacionContainer = document.getElementById('verificacionWhatsappContainer');
+            if (verificacionContainer) verificacionContainer.style.display = 'none';
+            codigoVerificado = false;
+            actualizarBotonSubmit();
+        }
         goToStep(4);
     }
 }
