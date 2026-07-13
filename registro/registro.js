@@ -727,7 +727,7 @@ function mostrarModalExito(tipoTexto, email) {
         document.body.style.overflow = 'hidden';
 
         // Iniciar contador
-        contadorRedireccion = 5;
+        contadorRedireccion = 30;
         if (contadorElemento) {
             contadorElemento.textContent = `Redirigiendo en ${contadorRedireccion} segundos...`;
         }
@@ -919,8 +919,10 @@ function inicializarRegistro() {
 // ================================================================
 const registroForm = document.getElementById('registroForm');
 if (registroForm) {
-    registroForm.addEventListener('submit', function(e) {
+    registroForm.addEventListener('submit', async function(e) {
         e.preventDefault();
+
+        console.log('✅ Formulario enviado - Iniciando proceso...');
 
         if (!terminosCheck || !terminosCheck.checked || !privacidadCheck || !privacidadCheck.checked || !veridicidadCheck || !veridicidadCheck.checked) {
             alert('⚠️ Debes aceptar todos los términos para continuar.');
@@ -987,9 +989,44 @@ if (registroForm) {
         console.log('=== REGISTRO COMPLETO ===');
         console.log(JSON.stringify(datos, null, 2));
 
-        const tipoTexto = tipoUsuario === 'consumidor' ? 'Consumidor' : 'Restaurante';
+        // === GUARDAR EN LOCALSTORAGE ===
+        try {
+            const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            usuarios.push({
+                ...datos,
+                fechaRegistro: new Date().toISOString()
+            });
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            console.log('✅ Usuario guardado en localStorage');
+        } catch (error) {
+            console.error('❌ Error al guardar usuario:', error);
+        }
 
-        // Mostrar modal de éxito en lugar de alert
+        // === ENVIAR CORREO DE BIENVENIDA ===
+        if (datos.email && datos.email.includes('@')) {
+            /*try {
+                const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
+                const emailEnviado = await enviarCorreoBienvenida(
+                    nombreCompleto,
+                    datos.email,
+                    datos.tipoUsuario
+                );
+                
+                if (emailEnviado) {
+                    console.log('✅ Correo de bienvenida enviado a:', datos.email);
+                } else {
+                    console.warn('⚠️ No se pudo enviar el correo de bienvenida');
+                }
+            } catch (error) {
+                console.error('❌ Error en el envío del correo:', error);
+            }
+            */
+            console.log('📧 EmailJS desactivado para pruebas - No se envió correo');
+        } else {
+            console.warn('⚠️ Correo no válido, no se envió mensaje');
+        }
+
+        const tipoTexto = tipoUsuario === 'consumidor' ? 'Consumidor' : 'Restaurante';
         mostrarModalExito(tipoTexto, datos.email);
     });
 }

@@ -48,7 +48,7 @@
             </div>
 
             <!-- ===== FORMULARIO ===== -->
-            <form id="registroForm" class="registro-form">
+            <form id="registroForm" class="registro-form" novalidate>
 
                 <!-- ========================================================= -->
                 <!-- PASO 1: DATOS PERSONALES -->
@@ -203,10 +203,10 @@
                                 <label for="telefonoWhatsapp">
                                     <i class="fab fa-whatsapp" aria-hidden="true"></i> Número de teléfono (WhatsApp) *
                                 </label>
-                                <input type="tel" id="telefonoWhatsapp" placeholder="+55 600 000 000" />
+                                <input type="tel" id="telefonoWhatsapp" placeholder="+52 5500 0000 00" />
                                 <p class="ayuda-texto">
                                     <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                    Incluye el código de tu país (ej: +55 para CDMX)
+                                    Incluye el código de tu país (ej: +52 para CDMX)
                                     <br />
                                     <i class="fas fa-shield-alt" aria-hidden="true"></i>
                                     Te enviaremos un código de verificación por WhatsApp
@@ -538,6 +538,11 @@
         </div>
     </div>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- EmailJS Configuración -->
+    <script src="email.js"></script>
+    <!-- Registro JS -->
     <script src="registro.js"></script>
 </body>
 </html>
