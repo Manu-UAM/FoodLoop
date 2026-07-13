@@ -1,19 +1,11 @@
-// ================================================================
-// EMAILJS - CONFIGURACIÓN
-// ================================================================
-
-// Inicializar EmailJS con tu Public Key
 emailjs.init('NUeNWLT_mmwIf0ky0');
 
-// ================================================================
-// ENVIAR CORREO DE BIENVENIDA
-// ================================================================
 async function enviarCorreoBienvenida(nombre, email, tipo) {
     try {
         const templateParams = {
             nombre: nombre,
             tipo: tipo === 'consumidor' ? 'Consumidor' : 'Restaurante',
-            to_email: email   // ← ¡Esta línea es la que faltaba!
+            to_email: email 
         };
 
         const response = await emailjs.send(

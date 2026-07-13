@@ -384,7 +384,7 @@ function nextStep() {
         
         if (whatsappCheck && whatsappCheck.checked) {
             if (!telefonoInput || !telefonoInput.value || telefonoInput.value.trim().length < 6) {
-                alert('⚠️ Para recibir notificaciones por WhatsApp, debes ingresar un número de teléfono válido.\n\nSi no deseas recibir notificaciones, desmarca la opción de WhatsApp.');
+                alert('⚠️ Para recibir notificaciones por WhatsApp, debes ingresar un número de teléfono válido.\n\nDesmarca la opción de WhatsApp o presiona el botón "Omitir" si no deseseas recibir notificaciones por Whatsapp.');
                 if (telefonoInput) {
                     telefonoInput.focus();
                     mostrarErrorCampo(telefonoInput, 'Ingresa un número de teléfono válido');
