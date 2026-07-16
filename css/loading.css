@@ -1,0 +1,57 @@
+/* ================================================================
+   LOADING · SPINNER Y ESTADOS DE CARGA
+   ================================================================ */
+
+/* ===== SPINNER ===== */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 0.8s ease-in-out infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== BOTÓN EN ESTADO DE CARGA ===== */
+.btn-loading {
+    opacity: 0.7 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
+.btn-loading .btn-text {
+    visibility: visible;
+}
+
+.btn-loading .spinner {
+    display: inline-block;
+}
+
+/* ===== BOTÓN CON SPINNER (oculto por defecto) ===== */
+.btn .spinner {
+    display: none;
+}
+
+/* ===== VARIANTE OSCURA (para botones secundarios) ===== */
+.btn-loading-dark .spinner {
+    border-color: rgba(0, 0, 0, 0.2);
+    border-top-color: #333;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+    .spinner {
+        width: 16px;
+        height: 16px;
+        border-width: 2px;
+    }
+}

@@ -1,35 +1,29 @@
-// ================================================================
-// SERVER · EXPRESS + POSTGRESQL
-// ================================================================
-
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 
-// Cargar variables de entorno
 dotenv.config();
 
 // ===== CONFIGURACIÓN DE LA BASE DE DATOS =====
+
+// Conexión a PostgreSQL (remotamente remoto jajaja)
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
 });
 
 
-/*
-// Conexión a PostgreSQL (local o Render)
-const pool = new Pool(
-    process.env.DATABASE_URL
-        ? { connectionString: process.env.DATABASE_URL }
-        : {
-            host: 'localhost',
-            port: 5432,
-            user: 'postgres',
-            password: '123456', // ← tu contraseña local
-            database: 'foodloop'
-        }
-);*/
+
+// Conexión a PostgreSQL (localmente local xD)
+/*const pool = new Pool({
+    host: 'localhost',
+    port: 5432,
+    user: 'postgres',
+    password: '123456', // ← Tu contraseña local
+    database: 'foodloop'
+});
+*/
 
 // Probar conexión a la base de datos
 pool.connect((err, client, release) => {
