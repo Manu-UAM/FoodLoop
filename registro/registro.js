@@ -84,15 +84,10 @@ if (togglePasswordConfirm) {
 // ================================================================
 // MODO DALTÓNICO
 // ================================================================
+
 if (modoDaltonico) {
     modoDaltonico.addEventListener('change', function() {
-        if (this.checked) {
-            body.classList.add('modo-daltonico');
-            localStorage.setItem('modoDaltonico', 'true');
-        } else {
-            body.classList.remove('modo-daltonico');
-            localStorage.setItem('modoDaltonico', 'false');
-        }
+        actualizarPreferencia('modoDaltonico', this.checked);
         setTimeout(forzarActualizacionCompleta, 100);
     });
 }
@@ -102,38 +97,9 @@ if (modoDaltonico) {
 // ================================================================
 if (textoGrande) {
     textoGrande.addEventListener('change', function() {
-        if (this.checked) {
-            body.classList.add('texto-grande');
-            localStorage.setItem('textoGrande', 'true');
-        } else {
-            body.classList.remove('texto-grande');
-            localStorage.setItem('textoGrande', 'false');
-        }
+        actualizarPreferencia('textoGrande', this.checked);
         setTimeout(forzarActualizacionCompleta, 100);
     });
-}
-
-// ================================================================
-// CARGAR PREFERENCIAS GUARDADAS
-// ================================================================
-function cargarPreferencias() {
-    const daltonicoGuardado = localStorage.getItem('modoDaltonico');
-    if (daltonicoGuardado === 'true') {
-        if (modoDaltonico) modoDaltonico.checked = true;
-        body.classList.add('modo-daltonico');
-    } else {
-        if (modoDaltonico) modoDaltonico.checked = false;
-        body.classList.remove('modo-daltonico');
-    }
-
-    const textoGuardado = localStorage.getItem('textoGrande');
-    if (textoGuardado === 'true') {
-        if (textoGrande) textoGrande.checked = true;
-        body.classList.add('texto-grande');
-    } else {
-        if (textoGrande) textoGrande.checked = false;
-        body.classList.remove('texto-grande');
-    }
 }
 
 // ================================================================
@@ -969,11 +935,10 @@ function mostrarModalExito(tipoTexto, email) {
             if (contadorRedireccion <= 0) {
                 clearInterval(intervalo);
                 const emailInput = document.getElementById('email');
-                if (emailInput) {
-                    window.location.href = `../login.html?email=${encodeURIComponent(emailInput.value)}`;
-                } else {
-                    window.location.href = '../login.html';
-                }
+                const emailValue = emailInput ? encodeURIComponent(emailInput.value) : '';
+                
+                // ✅ RUTA CORRECTA PARA LOCAL
+                window.location.href = `login.html?email=${emailValue}`;
             }
         }, 1000);
 
@@ -1130,7 +1095,15 @@ function asignarEventosBotones() {
 // INICIALIZACIÓN
 // ================================================================
 function inicializarRegistro() {
-    cargarPreferencias();
+    // === APLICAR PREFERENCIAS GUARDADAS ===
+    aplicarPreferencias();
+    
+    // === INICIALIZAR SWITCHES CON EL ESTADO ACTUAL ===
+    const prefs = obtenerPreferencias();
+    if (modoDaltonico) modoDaltonico.checked = prefs.modoDaltonico || false;
+    if (textoGrande) textoGrande.checked = prefs.textoGrande || false;
+    
+    // === RESTO DE LA INICIALIZACIÓN ===
     updateStepUI();
     asignarEventosBotones();
     actualizarBotonSubmit();

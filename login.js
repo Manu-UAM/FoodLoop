@@ -25,52 +25,17 @@ if (togglePassword) {
 // ===== MODO DALTÓNICO =====
 if (modoDaltonico) {
     modoDaltonico.addEventListener('change', function() {
-        // Usar preferences.js para guardar
         actualizarPreferencia('modoDaltonico', this.checked);
-        
-        // Cambiar el CSS específico del login
-        if (this.checked) {
-            modoCSS.href = 'login-daltonico.css';
-        } else {
-            modoCSS.href = 'login-normal.css';
-        }
+        // Cambiar CSS específico del login
+        modoCSS.href = this.checked ? 'login-daltonico.css' : 'login-normal.css';
     });
 }
 
 // ===== TEXTO GRANDE =====
 if (textoGrande) {
     textoGrande.addEventListener('change', function() {
-        // Usar preferences.js para guardar
         actualizarPreferencia('textoGrande', this.checked);
     });
-}
-
-// ===== CARGAR PREFERENCIAS GUARDADAS =====
-function cargarPreferencias() {
-    // Usar preferences.js para obtener las preferencias
-    const prefs = obtenerPreferencias();
-    
-    // Modo daltónico
-    if (modoDaltonico) {
-        modoDaltonico.checked = prefs.modoDaltonico || false;
-        if (prefs.modoDaltonico) {
-            modoCSS.href = 'login-daltonico.css';
-        } else {
-            modoCSS.href = 'login-normal.css';
-        }
-    }
-    
-    // Texto grande
-    if (textoGrande) {
-        textoGrande.checked = prefs.textoGrande || false;
-        if (prefs.textoGrande) {
-            body.classList.add('texto-grande');
-        } else {
-            body.classList.remove('texto-grande');
-        }
-    }
-    
-    console.log('🎨 Preferencias cargadas en login:', prefs);
 }
 
 // ===== ENVÍO DEL FORMULARIO =====
@@ -115,8 +80,5 @@ document.querySelectorAll('.form-group input').forEach(input => {
 
 // ===== INICIALIZAR =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Aplicar preferencias desde preferences.js
     aplicarPreferencias();
-    // Cargar preferencias en los switches
-    cargarPreferencias();
 });
