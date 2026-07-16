@@ -6,6 +6,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
 
 // Cargar variables de entorno
 dotenv.config();
@@ -14,6 +15,21 @@ dotenv.config();
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
 });
+
+
+/*
+// Conexión a PostgreSQL (local o Render)
+const pool = new Pool(
+    process.env.DATABASE_URL
+        ? { connectionString: process.env.DATABASE_URL }
+        : {
+            host: 'localhost',
+            port: 5432,
+            user: 'postgres',
+            password: '123456', // ← tu contraseña local
+            database: 'foodloop'
+        }
+);*/
 
 // Probar conexión a la base de datos
 pool.connect((err, client, release) => {
@@ -48,6 +64,7 @@ app.get('/api/health', (req, res) => {
 // ===== RUTA DE REGISTRO =====
 app.post('/api/registro', async (req, res) => {
     try {
+        
         const { 
             nombre, 
             apellido, 
@@ -81,6 +98,9 @@ app.post('/api/registro', async (req, res) => {
         }
 
         // Guardar usuario en la base de datos
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
         const result = await pool.query(
             `INSERT INTO usuarios 
              (nombre, apellido, email, password_hash, tipo_usuario, telefono)
@@ -90,7 +110,7 @@ app.post('/api/registro', async (req, res) => {
                 nombre, 
                 apellido, 
                 email, 
-                password, // En producción, usar bcrypt
+                hashedPassword, // En producción, usar bcrypt
                 tipoUsuario,
                 notificaciones?.telefonoWhatsapp || null
             ]

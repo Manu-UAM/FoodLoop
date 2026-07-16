@@ -1309,6 +1309,7 @@ if (registroForm) {
 
         // === ENVIAR CORREO DE BIENVENIDA ===
         if (datos.email && datos.email.includes('@')) {
+            /*
             try {
                 const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
                 
@@ -1342,7 +1343,7 @@ if (registroForm) {
             } catch (error) {
                 console.error('❌ Error en el envío del correo:', error);
             }
-            
+            */
            console.log('✅ Simulación de correo enviado. Api deshabilitado.');
         } else {
             console.warn('⚠️ Correo no válido, no se envió mensaje');
