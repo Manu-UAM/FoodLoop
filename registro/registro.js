@@ -1318,6 +1318,7 @@ if (registroForm) {
             // ================================================================
             
             if (datos.email && datos.email.includes('@')) {
+                /*
                 try {
                     const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
                     
@@ -1348,15 +1349,17 @@ if (registroForm) {
                     } else {
                         console.warn('⚠️ No se pudo enviar el correo de bienvenida');
                     }
+                        
+                    console.log('📧 Simulación de correo enviado. API deshabilitado.');
                 } catch (error) {
                     console.error('❌ Error en el envío del correo:', error);
                 }
+                */
             } else {
                 console.warn('⚠️ Correo no válido, no se envió mensaje');
             }
             
             console.log('📧 Simulación de correo enviado. API deshabilitado.');
-
             // ===== OCULTAR SPINNER Y MOSTRAR MODAL DE ÉXITO =====
             hideLoading('#btnSubmit');
             tipoTexto = tipoUsuario === 'consumidor' ? 'Consumidor' : 'Restaurante';
