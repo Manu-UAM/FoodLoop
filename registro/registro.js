@@ -1284,22 +1284,32 @@ if (registroForm) {
         console.log('=== REGISTRO COMPLETO ===');
         console.log(JSON.stringify(datos, null, 2));
 
-        // === GUARDAR EN LOCALSTORAGE ===
+        // === GUARDAR EN POSTGRESQL (via API) ===
         try {
-            const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-            usuarios.push({
-                ...datos,
-                fechaRegistro: new Date().toISOString()
-            });
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-            console.log('✅ Usuario guardado en localStorage');
+            // Agregar password al objeto datos (temporal)
+            datos.password = document.getElementById('password')?.value || '123456';
+            
+            const resultado = await registrarUsuario(datos);
+            
+            if (resultado.success) {
+                console.log('✅ Usuario guardado en PostgreSQL');
+                // Opcional: guardar también en localStorage para sesión
+                localStorage.setItem('usuario_sesion', JSON.stringify(resultado.data.usuario));
+                // Continuar con el flujo normal...
+            } else {
+                // Mostrar error al usuario
+                alert('❌ ' + resultado.message);
+                return;
+            }
         } catch (error) {
             console.error('❌ Error al guardar usuario:', error);
+            alert('❌ Error al conectar con el servidor. Asegúrate de que el backend esté corriendo.');
+            return;
         }
 
         // === ENVIAR CORREO DE BIENVENIDA ===
         if (datos.email && datos.email.includes('@')) {
-            /*try {
+            try {
                 const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
                 
                 let telefono = 'No especificado';
@@ -1332,7 +1342,7 @@ if (registroForm) {
             } catch (error) {
                 console.error('❌ Error en el envío del correo:', error);
             }
-            */
+            
            console.log('✅ Simulación de correo enviado. Api deshabilitado.');
         } else {
             console.warn('⚠️ Correo no válido, no se envió mensaje');
@@ -1370,3 +1380,7 @@ if (document.readyState === 'loading') {
 } else {
     inicializarRegistro();
 }
+
+
+
+// === GUARDAR EN POSTGRESQL (via API) === Linea 1287
