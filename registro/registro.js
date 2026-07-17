@@ -1014,7 +1014,7 @@ function mostrarModalExito(tipoTexto, email) {
                 clearInterval(intervalo);
                 const emailInput = document.getElementById('email');
                 const emailValue = emailInput ? encodeURIComponent(emailInput.value) : '';
-                window.location.href = `login.html?email=${emailValue}`;
+                window.location.href = `../login.html?email=${emailValue}`;
             }
         }, 1000);
 
@@ -1363,7 +1363,50 @@ if (registroForm) {
             console.log('✅ Usuario guardado en PostgreSQL');
             localStorage.setItem('usuario_sesion', JSON.stringify(resultado.data.usuario));
 
+            // ================================================================
+            // ENVIAR CORREO DE BIENVENIDA
+            // ================================================================
+            if (datos.email && datos.email.includes('@')) {
+            /*
+                try {
+                const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
+                
+                let telefono = 'No especificado';
+                let whatsapp = 'No especificado';
+                
+                if (tipoUsuario === 'restaurante') {
+                    const telefonoLocal = document.getElementById('telefonoLocal');
+                    const telefonoWhatsappRest = document.getElementById('telefonoWhatsappRestaurante');
+                    const whatsappCheck = document.getElementById('whatsappRestaurante');
+                    
+                    if (telefonoLocal) telefono = telefonoLocal.value || 'No especificado';
+                    if (whatsappCheck && whatsappCheck.checked && telefonoWhatsappRest) {
+                        whatsapp = telefonoWhatsappRest.value || 'No especificado';
+                    }
+                }
+                
+                const emailEnviado = await enviarCorreoBienvenida(
+                    nombreCompleto,
+                    datos.email,
+                    datos.tipoUsuario,
+                    telefono,
+                    whatsapp
+                );
+                
+                if (emailEnviado) {
+                    console.log('✅ Correo de bienvenida enviado a:', datos.email);
+                } else {
+                    console.warn('⚠️ No se pudo enviar el correo de bienvenida');
+                }
+            } catch (error) {
+                console.error('❌ Error en el envío del correo:', error);
+            }
+                */
             console.log('📧 Simulación de correo enviado. API deshabilitado.');
+        } else {
+            console.warn('⚠️ Correo no válido, no se envió mensaje');
+        }
+
 
             hideLoading('#btnSubmit');
             tipoTexto = tipoUsuario === 'consumidor' ? 'Consumidor' : 'Restaurante';

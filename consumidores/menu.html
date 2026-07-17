@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú · FoodLoop</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #344E41; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; flex-direction: column; }
+        .container { background: #DAD7CD; color: #1B1B1B; padding: 40px; border-radius: 20px; text-align: center; max-width: 500px; }
+        h1 { font-size: 32px; }
+        p { font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Menú del Consumidor</h1>
+        <p>Bienvenido, <span id="nombreUsuario">Usuario</span>.</p>
+        <p>Aquí verás los platillos disponibles.</p>
+        <button onclick="cerrarSesion()" style="background: #588157; color: white; border: none; padding: 12px 30px; border-radius: 10px; cursor: pointer; font-size: 16px;">Cerrar sesión</button>
+    </div>
+    <!-- RUTAS CORREGIDAS: subir un nivel con ../ -->
+    <script src="../js/auth.js"></script>
+    <script>
+        const usuario = obtenerUsuarioLogueado();
+        if (usuario) {
+            document.getElementById('nombreUsuario').textContent = usuario.nombre || 'Usuario';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio · Restaurante</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="dashboard-restaurante.css" />
+    <link rel="stylesheet" href="../css/loading.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ===== TOOLTIPS MEJORADOS ===== */
+        [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        [data-tooltip]::before,
+        [data-tooltip]::after {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            pointer-events: none;
+            z-index: 99999;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        [data-tooltip]::before {
+            content: attr(data-tooltip);
+            padding: 8px 14px;
+            background: #1e293b;
+            color: #f1f5f9;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            line-height: 1.5;
+            white-space: normal;
+            word-break: break-word;
+            width: max-content;
+            max-width: 280px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            bottom: calc(100% + 10px);
+        }
+
+        [data-tooltip]::after {
+            content: "";
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+            bottom: calc(100% + 4px);
+        }
+
+        [data-tooltip]:hover::before,
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        [data-tooltip].tooltip-bottom::before {
+            bottom: auto;
+            top: calc(100% + 10px);
+        }
+        [data-tooltip].tooltip-bottom::after {
+            bottom: auto;
+            top: calc(100% + 4px);
+            border-top-color: transparent;
+            border-bottom-color: #1e293b;
+        }
+
+        body,
+        .header,
+        .nav,
+        .main-content,
+        .section,
+        .cards-grid,
+        .table-container,
+        .footer-accesibilidad,
+        .camara-wrapper,
+        .form-group,
+        .password-wrapper {
+            overflow: visible !important;
+        }
+
+        .card,
+        .btn-logout,
+        .nav-item,
+        .btn-filter,
+        .btn-primary,
+        .btn-camara,
+        .switch {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-left" id="logoLink" style="cursor:pointer;" data-tooltip="Volver al inicio del dashboard" class="tooltip-bottom">
+            <img src="../images/logo.png" alt="FoodLoop" class="logo" />
+            <h1>FoodLoop <span>Restaurante</span></h1>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="nombre" id="nombreRestaurante" data-tooltip="Nombre del restaurante autenticado" class="tooltip-bottom">Cargando...</div>
+                <div class="tipo" data-tooltip="Rol de usuario" class="tooltip-bottom">Restaurante</div>
+            </div>
+            <button class="btn-logout" onclick="cerrarSesion()" data-tooltip="Cerrar sesión y volver al login" class="tooltip-bottom">
+                <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Cerrar sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== NAVEGACIÓN ===== -->
+    <nav class="nav" id="navPrincipal">
+        <button class="nav-item active" data-section="dashboard" data-tooltip="Ver el resumen del día y estadísticas"><i class="fas fa-home"></i> Inicio</button>
+        <button class="nav-item" data-section="publicar" data-tooltip="Publicar un nuevo platillo en oferta"><i class="fas fa-plus-circle"></i> Publicar</button>
+        <button class="nav-item" data-section="mis-platillos" data-tooltip="Ver y gestionar tus platillos activos"><i class="fas fa-utensils"></i> En oferta</button>
+        <button class="nav-item" data-section="reservas" data-tooltip="Gestionar todas las reservas recibidas"><i class="fas fa-clipboard-list"></i> Reservas</button>
+        <button class="nav-item" data-section="perfil" data-tooltip="Editar los datos de tu restaurante"><i class="fas fa-user-cog"></i> Perfil</button>
+    </nav>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <main class="main-content">
+
+        <!-- ===== SECCIÓN INICIO ===== -->
+        <section id="section-dashboard" class="section active">
+            <h2>📊 Inicio</h2>
+            <div class="cards-grid">
+                <div class="card" data-tooltip="Total de platillos activos que has publicado">
+                    <div class="card-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="card-number" id="countPlatillos">0</div>
+                    <div class="card-label">Ofertas activas</div>
+                </div>
+                <div class="card" data-tooltip="Reservas programadas para el día de hoy">
+                    <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="card-number" id="countReservasHoy">0</div>
+                    <div class="card-label">Reservas hoy</div>
+                </div>
+                <div class="card" data-tooltip="Ganancia estimada basada en reservas confirmadas de hoy">
+                    <div class="card-icon"><i class="fas fa-coins"></i></div>
+                    <div class="card-number" id="gananciasHoy">$0</div>
+                    <div class="card-label">Ganancias estimadas</div>
+                </div>
+                <div class="card" data-tooltip="Notificaciones y alertas pendientes de revisar">
+                    <div class="card-icon"><i class="fas fa-bell"></i></div>
+                    <div class="card-number" id="notificaciones">0</div>
+                    <div class="card-label">Notificaciones</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>📋 Últimas reservas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-tooltip="Nombre del cliente que reservó">Cliente</th>
+                            <th data-tooltip="Nombre del platillo reservado">Platillo</th>
+                            <th data-tooltip="Monto total de la reserva">Total</th>
+                            <th data-tooltip="Estado actual de la reserva">Estado</th>
+                            <th data-tooltip="Acciones disponibles para esta reserva">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaReservasDash">
+                        <tr>
+                            <td colspan="5" style="text-align:center; color:var(--text-muted);">No hay reservas recientes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN PUBLICAR PLATILLO ===== -->
+        <section id="section-publicar" class="section">
+            <h2>➕ Publicar nuevo platillo</h2>
+            <form id="formPublicar" class="form-publicar" novalidate>
+                <div class="form-group">
+                    <label for="nombrePlatillo">Nombre del platillo *</label>
+                    <input type="text" id="nombrePlatillo" placeholder="Ej: Hamburguesa especial" required data-tooltip="Escribe el nombre del platillo que vas a ofrecer" />
+                </div>
+                <div class="form-group">
+                    <label for="descripcionPlatillo">Descripción * (mínimo 10 caracteres)</label>
+                    <textarea id="descripcionPlatillo" rows="3" placeholder="Describe tu platillo..." required minlength="10" data-tooltip="Describe los ingredientes y características del platillo (mínimo 10 caracteres)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipoOferta">Tipo de oferta *</label>
+                    <select id="tipoOferta" required data-tooltip="Selecciona el tipo de oferta: Venta (con descuento), Donación (gratis) o Subasta (precio dinámico)">
+                        <option value="venta">Venta</option>
+                        <option value="donacion">Donación</option>
+                        <option value="subasta">Subasta</option>
+                    </select>
+                </div>
+
+                <!-- Campos para VENTA -->
+                <div id="camposVenta" class="campos-oferta">
+                    <div class="form-group">
+                        <label for="precioOriginalVenta">Precio original *</label>
+                        <input type="number" id="precioOriginalVenta" placeholder="200" min="0" step="0.01" data-tooltip="Precio de referencia antes del descuento" />
+                    </div>
+                    <div class="form-group">
+                        <label for="precioOfertaVenta">Precio en oferta * (más bajo que el original)</label>
+                        <input type="number" id="precioOfertaVenta" placeholder="150" min="0" step="0.01" data-tooltip="Precio con descuento (debe ser menor al original)" />
+                    </div>
+                </div>
+
+                <!-- Campos para SUBASTA -->
+                <div id="camposSubasta" class="campos-oferta" style="display:none;">
+                    <div class="form-group">
+                        <label for="precioOriginalSubasta">Precio original (referencia) *</label>
+                        <input type="number" id="precioOriginalSubasta" placeholder="500" min="0" step="0.01" data-tooltip="Precio de referencia para la subasta" />
+                    </div>
+                    <div class="form-group">
+                        <label for="precioInicioSubasta">Precio de inicio de subasta *</label>
+                        <input type="number" id="precioInicioSubasta" placeholder="400" min="0" step="0.01" data-tooltip="Precio inicial de la subasta" />
+                    </div>
+                    <div class="form-group">
+                        <label for="intervaloSubasta">Cada cuánto baja el precio *</label>
+                        <select id="intervaloSubasta" data-tooltip="Intervalo de tiempo entre cada disminución de precio">
+                            <option value="1">1 minuto</option>
+                            <option value="5">5 minutos</option>
+                            <option value="10" selected>10 minutos</option>
+                            <option value="15">15 minutos</option>
+                            <option value="30">30 minutos</option>
+                            <option value="60">1 hora</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="disminucionSubasta">Cantidad a disminuir *</label>
+                        <select id="disminucionSubasta" data-tooltip="Monto que se resta en cada intervalo">
+                            <option value="1">$1</option>
+                            <option value="5">$5</option>
+                            <option value="10" selected>$10</option>
+                            <option value="20">$20</option>
+                            <option value="50">$50</option>
+                            <option value="100">$100</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="limiteMinimoSubasta">Límite mínimo (precio final) *</label>
+                        <input type="number" id="limiteMinimoSubasta" placeholder="100" min="0" step="0.01" data-tooltip="Precio mínimo al que puede llegar la subasta" />
+                    </div>
+                    <div class="form-group">
+                        <label for="tiempoEsperaSubasta">Tiempo de espera al llegar al mínimo (minutos) *</label>
+                        <input type="number" id="tiempoEsperaSubasta" placeholder="30" min="1" data-tooltip="Tiempo que se mantiene el precio mínimo antes de retirar la oferta" />
+                    </div>
+                </div>
+
+                <!-- Donación -->
+                <div id="camposDonacion" class="campos-oferta" style="display:none;">
+                    <div class="form-group">
+                        <label for="precioDonacion">Precio de referencia (opcional)</label>
+                        <input type="number" id="precioDonacion" placeholder="0" min="0" step="0.01" data-tooltip="Precio de referencia para la donación (no es obligatorio)" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="stockPlatillo">Cantidad disponible *</label>
+                    <input type="number" id="stockPlatillo" placeholder="10" min="1" required data-tooltip="Número de unidades disponibles para reservar" />
+                </div>
+
+                <div class="form-group">
+                    <label for="categoriaPlatillo">Categoría *</label>
+                    <select id="categoriaPlatillo" required data-tooltip="Selecciona la categoría del platillo">
+                        <option value="">Selecciona una categoría</option>
+                        <option value="rapida">Comida rápida</option>
+                        <option value="mexicana">Mexicana</option>
+                        <option value="italiana">Italiana</option>
+                        <option value="asiatica">Asiática</option>
+                        <option value="vegetariana">Vegetariana/Vegana</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+
+                <!-- ===== CÁMARA OBLIGATORIA ===== -->
+                <div class="form-group">
+                    <label>📸 Foto del platillo * <span style="font-weight:400; color:var(--text-muted);">(obligatoria)</span></label>
+                    <div class="camara-wrapper" id="camaraWrapper">
+                        <video id="videoCamara" autoplay playsinline></video>
+                        <div class="camara-actions">
+                            <button type="button" class="btn-camara abrir" id="btnAbrirCamara" data-tooltip="Activar la cámara para tomar una foto">
+                                <i class="fas fa-camera" aria-hidden="true"></i> Abrir cámara
+                            </button>
+                            <button type="button" class="btn-camara tomar" id="btnTomarFoto" style="display:none;" data-tooltip="Capturar la foto del platillo">
+                                <i class="fas fa-circle" aria-hidden="true"></i> Tomar foto
+                            </button>
+                            <button type="button" class="btn-camara retomar" id="btnRetomarFoto" style="display:none;" data-tooltip="Tomar otra foto (reemplaza la actual)">
+                                <i class="fas fa-redo" aria-hidden="true"></i> Tomar otra foto
+                            </button>
+                            <button type="button" class="btn-camara eliminar" id="btnEliminarFoto" style="display:none;" data-tooltip="Eliminar la foto tomada">
+                                <i class="fas fa-trash-alt" aria-hidden="true"></i> Eliminar foto
+                            </button>
+                            <button type="button" class="btn-camara cerrar" id="btnCerrarCamara" style="display:none;" data-tooltip="Cerrar la cámara">
+                                <i class="fas fa-times" aria-hidden="true"></i> Cerrar
+                            </button>
+                        </div>
+                        <div class="foto-preview" id="fotoPreview">
+                            <img id="fotoCapturada" src="" alt="Foto del platillo" />
+                        </div>
+                        <div class="foto-status" id="fotoStatus">📷 (obligatoria)</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="btnPublicar" data-tooltip="Publica el platillo con todos los datos ingresados">
+                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Publicar platillo
+                </button>
+            </form>
+        </section>
+
+        <!-- ===== SECCIÓN EN OFERTA ===== -->
+        <section id="section-mis-platillos" class="section">
+            <h2>🍽️ En oferta</h2>
+            <div class="table-container">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+                    <input type="text" id="searchPlatillo" placeholder="🔍 Buscar platillo..." style="padding:10px 14px; border:2px solid var(--input-border); border-radius:8px; font-size:14px; flex:1; min-width:200px; background:#FFFFFF; color:var(--text-primary);" data-tooltip="Filtrar platillos por nombre" />
+                    <select id="filterCategoria" style="padding:10px 14px; border:2px solid var(--input-border); border-radius:8px; font-size:14px; background:#FFFFFF; color:var(--text-primary);" data-tooltip="Filtrar por categoría de platillo">
+                        <option value="">Todas las categorías</option>
+                        <option value="rapida">Comida rápida</option>
+                        <option value="mexicana">Mexicana</option>
+                        <option value="italiana">Italiana</option>
+                        <option value="asiatica">Asiática</option>
+                        <option value="vegetariana">Vegetariana/Vegana</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-tooltip="Nombre del platillo">Nombre</th>
+                            <th data-tooltip="Categoría del platillo">Categoría</th>
+                            <th data-tooltip="Precio actual del platillo">Precio</th>
+                            <th data-tooltip="Unidades disponibles">Stock</th>
+                            <th data-tooltip="Tipo de oferta (venta, donación, subasta)">Oferta</th>
+                            <th data-tooltip="Acciones: editar o eliminar">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaMisPlatillos">
+                        <tr>
+                            <td colspan="5" style="text-align:center; color:var(--text-muted);">Cargando platillos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN RESERVAS ===== -->
+        <section id="section-reservas" class="section">
+            <h2>📋 Reservas</h2>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">
+                <button class="btn-filter active" data-filter="todas" data-tooltip="Mostrar todas las reservas">Todas</button>
+                <button class="btn-filter" data-filter="pendiente" data-tooltip="Reservas pendientes de confirmar">Pendientes</button>
+                <button class="btn-filter" data-filter="confirmada" data-tooltip="Reservas ya confirmadas">Confirmadas</button>
+                <button class="btn-filter" data-filter="completada" data-tooltip="Reservas completadas">Completadas</button>
+                <button class="btn-filter" data-filter="cancelada" data-tooltip="Reservas canceladas">Canceladas</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-tooltip="Código único de la reserva">Código</th>
+                            <th data-tooltip="Nombre del cliente">Cliente</th>
+                            <th data-tooltip="Platillo reservado">Platillo</th>
+                            <th data-tooltip="Monto total">Total</th>
+                            <th data-tooltip="Fecha y hora de la reserva">Fecha</th>
+                            <th data-tooltip="Estado actual">Estado</th>
+                            <th data-tooltip="Acciones disponibles">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaReservas">
+                        <tr>
+                            <td colspan="7" style="text-align:center; color:var(--text-muted);">Cargando reservas...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN PERFIL ===== -->
+        <section id="section-perfil" class="section">
+            <h2>⚙️ Configuración del restaurante</h2>
+            <form id="formPerfil" class="form-publicar" style="max-width:100%;">
+                <div class="perfil-grid">
+                    <div class="form-group">
+                        <label for="perfilNombre">Nombre del restaurante *</label>
+                        <input type="text" id="perfilNombre" required data-tooltip="Nombre comercial del restaurante" />
+                    </div>
+                    <div class="form-group">
+                        <label for="perfilTelefono">Teléfono *</label>
+                        <input type="tel" id="perfilTelefono" placeholder="55 1234 5678" required data-tooltip="Número de contacto del restaurante" />
+                    </div>
+                    <div class="form-group">
+                        <label for="perfilEmail">Correo electrónico *</label>
+                        <input type="email" id="perfilEmail" required data-tooltip="Correo electrónico principal del restaurante" />
+                    </div>
+                    <div class="form-group">
+                        <label for="perfilDireccion">Dirección</label>
+                        <input type="text" id="perfilDireccion" placeholder="Calle, número, colonia" data-tooltip="Dirección física del restaurante" />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="perfilHorarioApertura">Horario de atención</label>
+                        <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                            <input type="time" id="perfilHorarioApertura" style="flex:1; min-width:120px;" data-tooltip="Hora de apertura" />
+                            <input type="time" id="perfilHorarioCierre" style="flex:1; min-width:120px;" data-tooltip="Hora de cierre" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="perfilLogo">Logo del restaurante</label>
+                        <input type="file" id="perfilLogo" accept="image/*" data-tooltip="Sube una imagen para el logo de tu restaurante" />
+                        <div id="previewLogo" style="margin-top:8px; width:80px; height:80px; border:2px dashed var(--border-card); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:12px; overflow:hidden;">
+                            Sin logo
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="perfilPassword">Nueva contraseña (dejar vacío para mantener)</label>
+                        <input type="password" id="perfilPassword" placeholder="Nueva contraseña" data-tooltip="Cambiar la contraseña de acceso" />
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" id="btnGuardarPerfil" data-tooltip="Guardar los cambios en el perfil">
+                    <i class="fas fa-save" aria-hidden="true"></i> Guardar cambios
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER (SWITCHES DE ACCESIBILIDAD) ===== -->
+    <footer class="footer-accesibilidad">
+        <div class="switch-group">
+            <span class="switch-label" data-tooltip="Activa colores adaptados para daltonismo" class="tooltip-bottom">
+                <i class="fas fa-eye" aria-hidden="true"></i> Modo daltónico
+            </span>
+            <label class="switch" data-tooltip="Interruptor para activar/desactivar el modo daltónico" class="tooltip-bottom">
+                <input type="checkbox" id="modoDaltonico" />
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="switch-group">
+            <span class="switch-label" data-tooltip="Aumenta el tamaño de todos los textos y elementos" class="tooltip-bottom">
+                <i class="fas fa-font" aria-hidden="true"></i> Texto grande
+            </span>
+            <label class="switch" data-tooltip="Interruptor para activar/desactivar el modo de texto grande" class="tooltip-bottom">
+                <input type="checkbox" id="textoGrande" />
+                <span class="slider"></span>
+            </label>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="../js/config.js"></script>
+    <script src="../js/preferences.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/loading.js"></script>
+    <script src="dashboard-restaurante.js"></script>
+</body>
+</html>

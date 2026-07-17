@@ -7,6 +7,7 @@
     
     <!-- CSS BASE (siempre se carga) -->
     <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="css/loading.css" />
     
     <!-- CSS DE MODO (se carga según preferencia) -->
     <link rel="stylesheet" href="login-normal.css" id="modoCSS" />
@@ -15,6 +16,66 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+
+    <!-- Estilos de tooltips - SIN aplicar a .toggle-password -->
+    <style>
+        /* Tooltips para elementos con data-tooltip (excluye .toggle-password) */
+        [data-tooltip]:not(.toggle-password) {
+            position: relative;
+            cursor: help;
+        }
+        [data-tooltip]:not(.toggle-password)::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 14px;
+            background: #1e293b;
+            color: #f1f5f9;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            line-height: 1.5;
+            white-space: normal;
+            word-break: break-word;
+            width: max-content;
+            max-width: 240px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            pointer-events: none;
+            z-index: 999;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        [data-tooltip]:not(.toggle-password)::after {
+            content: "";
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            border: 6px solid transparent;
+            border-top-color: #1e293b;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            pointer-events: none;
+            z-index: 999;
+        }
+        [data-tooltip]:not(.toggle-password):hover::before,
+        [data-tooltip]:not(.toggle-password):hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Evitar cortes en contenedores */
+        .login-card,
+        .login-container {
+            overflow: visible !important;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
@@ -30,7 +91,7 @@
                     <label for="email">
                         <i class="fas fa-envelope" aria-hidden="true"></i> Correo Electrónico
                     </label>
-                    <input type="email" id="email" placeholder="ejemplo@correo.com" required />
+                    <input type="email" id="email" placeholder="ejemplo@correo.com" required data-tooltip="Ingresa aquí tu correo electrónico registrado (ejemplo@dominio.com)" />
                 </div>
 
                 <div class="form-group">
@@ -38,29 +99,30 @@
                         <i class="fas fa-lock" aria-hidden="true"></i> Contraseña
                     </label>
                     <div class="password-wrapper">
-                        <input type="password" id="password" placeholder="Ingresa tu contraseña" required />
-                        <button type="button" class="toggle-password" id="togglePassword">
-                            <i class="fas fa-eye" aria-hidden="true"></i>
+                        <input type="password" id="password" placeholder="Ingresa tu contraseña" required data-tooltip="Ingresa aquí tu contraseña (mínimo 8 caracteres, mayúscula, número y símbolo)" />
+                        <!-- Usamos title nativo en lugar de data-tooltip para no modificar el position -->
+                        <button type="button" class="toggle-password" id="togglePassword" title="Mostrar contraseña">
+                            <i class="fas fa-eye-slash" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
 
                 <div class="form-options">
-                    <label class="remember-me">
+                    <label class="remember-me" data-tooltip="Mantendrá tu sesión activa por 30 días en este navegador">
                         <input type="checkbox" /> Recordarme
                     </label>
-                    <a href="#" class="forgot-password">
+                    <a href="#" class="forgot-password" data-tooltip="Recibirás un enlace por correo para restablecer tu contraseña">
                         <i class="fas fa-key" aria-hidden="true"></i> 
                         ¿Olvidaste tu contraseña?
                     </a>
                 </div>
 
-                <button type="submit" class="btn-login">
+                <button type="submit" class="btn-login" id="btnLogin" data-tooltip="Haz clic para acceder a tu cuenta y comenzar a rescatar comida">
                     <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Iniciar Sesión
                 </button>
 
                 <p class="register-link">
-                    ¿No tienes cuenta? <a href="registro/registro.html"><i class="fas fa-user-plus" aria-hidden="true"></i> Regístrate aquí</a>
+                    ¿No tienes cuenta? <a href="registro/registro.html" data-tooltip="Crea una cuenta gratis en menos de 2 minutos"><i class="fas fa-user-plus" aria-hidden="true"></i> Regístrate aquí</a>
                 </p>
             </form>
 
@@ -71,7 +133,7 @@
                         <i class="fas fa-eye" aria-hidden="true"></i>
                         Modo daltónico
                     </span>
-                    <label class="switch">
+                    <label class="switch" data-tooltip="Activa colores de alto contraste para daltonismo (protanopia/deuteranopia)">
                         <input type="checkbox" id="modoDaltonico" />
                         <span class="slider"></span>
                     </label>
@@ -82,7 +144,7 @@
                         <i class="fas fa-font" aria-hidden="true"></i>
                         Texto grande
                     </span>
-                    <label class="switch">
+                    <label class="switch" data-tooltip="Aumenta el tamaño de fuente para mejorar la legibilidad">
                         <input type="checkbox" id="textoGrande" />
                         <span class="slider"></span>
                     </label>
@@ -91,7 +153,43 @@
         </div>
     </div>
     
+    <!-- Script para comportamiento del ojo (al revés) + actualización del title -->
+    <script>
+        (function() {
+            const toggleBtn = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const icon = toggleBtn.querySelector('i');
+            
+            let isVisible = false; // false = oculta (inicial)
+            
+            function updateToggle() {
+                if (isVisible) {
+                    icon.className = 'fas fa-eye';
+                    toggleBtn.title = 'Ocultar contraseña';
+                } else {
+                    icon.className = 'fas fa-eye-slash';
+                    toggleBtn.title = 'Mostrar contraseña';
+                }
+            }
+            
+            toggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                isVisible = !isVisible;
+                passwordInput.type = isVisible ? 'text' : 'password';
+                updateToggle();
+            });
+            
+            // Inicializar (oculta por defecto)
+            updateToggle();
+        })();
+    </script>
+    
+    <!-- Scripts existentes -->
+    <script src="js/config.js"></script>
     <script src="js/preferences.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/loading.js"></script>
     <script src="login.js"></script>
 </body>
 </html>

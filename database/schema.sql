@@ -1,5 +1,5 @@
 -- ================================================================
--- FOODLOOP · ESQUEMA DE BASE DE DATOS (POSTGRESQL)
+-- FOODLOOP · ESQUEMA COMPLETO DE BASE DE DATOS (POSTGRESQL)
 -- ================================================================
 
 -- ================================================================
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS preferencias (
 );
 
 -- ================================================================
--- 3. TABLA: RESTAURANTES (solo para usuarios tipo restaurante)
+-- 3. TABLA: RESTAURANTES
 -- ================================================================
 CREATE TABLE IF NOT EXISTS restaurantes (
     id SERIAL PRIMARY KEY,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS restaurantes (
 );
 
 -- ================================================================
--- 4. TABLA: PLATILLOS
+-- 4. TABLA: PLATILLOS (con todos los campos)
 -- ================================================================
 CREATE TABLE IF NOT EXISTS platillos (
     id SERIAL PRIMARY KEY,
@@ -69,23 +69,33 @@ CREATE TABLE IF NOT EXISTS platillos (
     nombre VARCHAR(200) NOT NULL,
     descripcion TEXT,
     precio DECIMAL(10,2) NOT NULL,
+    precio_original DECIMAL(10,2),
+    precio_oferta DECIMAL(10,2),
+    precio_actual DECIMAL(10,2),
     tipo_oferta VARCHAR(20) CHECK (tipo_oferta IN ('venta', 'subasta', 'donacion')) DEFAULT 'venta',
-    imagen TEXT,
-    disponible BOOLEAN DEFAULT TRUE,
     stock INTEGER DEFAULT 1,
+    disponible BOOLEAN DEFAULT TRUE,
+    imagen TEXT,
+    categoria VARCHAR(50),
+    subasta_intervalo INTEGER,
+    subasta_disminucion DECIMAL(10,2),
+    subasta_limite DECIMAL(10,2),
+    subasta_tiempo_espera INTEGER,
     fecha_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_expiracion TIMESTAMP
 );
 
 -- ================================================================
--- 5. TABLA: RESERVACIONES / PEDIDOS
+-- 5. TABLA: RESERVACIONES
 -- ================================================================
 CREATE TABLE IF NOT EXISTS reservaciones (
     id SERIAL PRIMARY KEY,
     usuario_id INTEGER REFERENCES usuarios(id) ON DELETE CASCADE,
     platillo_id INTEGER REFERENCES platillos(id) ON DELETE CASCADE,
+    restaurante_id INTEGER REFERENCES restaurantes(id) ON DELETE CASCADE,
+    codigo VARCHAR(20) UNIQUE NOT NULL,
     cantidad INTEGER DEFAULT 1,
-    precio_total DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
     estado VARCHAR(20) CHECK (estado IN ('pendiente', 'confirmada', 'completada', 'cancelada')) DEFAULT 'pendiente',
     fecha_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_confirmacion TIMESTAMP,
@@ -137,14 +147,16 @@ CREATE TABLE IF NOT EXISTS sesiones (
 -- ================================================================
 -- ÍNDICES PARA MEJORAR EL RENDIMIENTO
 -- ================================================================
-CREATE INDEX idx_usuarios_email ON usuarios(email);
-CREATE INDEX idx_restaurantes_usuario ON restaurantes(usuario_id);
-CREATE INDEX idx_platillos_restaurante ON platillos(restaurante_id);
-CREATE INDEX idx_reservaciones_usuario ON reservaciones(usuario_id);
-CREATE INDEX idx_reservaciones_estado ON reservaciones(estado);
-CREATE INDEX idx_favoritos_usuario ON favoritos(usuario_id);
-CREATE INDEX idx_notificaciones_usuario ON notificaciones(usuario_id);
-CREATE INDEX idx_sesiones_token ON sesiones(token);
+CREATE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email);
+CREATE INDEX IF NOT EXISTS idx_restaurantes_usuario ON restaurantes(usuario_id);
+CREATE INDEX IF NOT EXISTS idx_platillos_restaurante ON platillos(restaurante_id);
+CREATE INDEX IF NOT EXISTS idx_platillos_disponible ON platillos(disponible);
+CREATE INDEX IF NOT EXISTS idx_reservaciones_usuario ON reservaciones(usuario_id);
+CREATE INDEX IF NOT EXISTS idx_reservaciones_restaurante ON reservaciones(restaurante_id);
+CREATE INDEX IF NOT EXISTS idx_reservaciones_estado ON reservaciones(estado);
+CREATE INDEX IF NOT EXISTS idx_favoritos_usuario ON favoritos(usuario_id);
+CREATE INDEX IF NOT EXISTS idx_notificaciones_usuario ON notificaciones(usuario_id);
+CREATE INDEX IF NOT EXISTS idx_sesiones_token ON sesiones(token);
 
 -- ================================================================
 -- DATOS DE PRUEBA (opcional, para desarrollo)
@@ -152,4 +164,8 @@ CREATE INDEX idx_sesiones_token ON sesiones(token);
 
 -- Insertar un usuario de prueba (contraseña: 123456)
 -- INSERT INTO usuarios (nombre, apellido, email, password_hash, tipo_usuario)
--- VALUES ('Admin', 'FoodLoop', 'admin@foodloop.com', 'hash_aqui', 'consumidor');
+-- VALUES ('Admin', 'FoodLoop', 'admin@foodloop.com', '$2a$10$...', 'consumidor');
+
+-- Insertar un restaurante de prueba
+-- INSERT INTO restaurantes (usuario_id, nombre_comercial, region, calle, numero, colonia, ciudad, codigo_postal, categoria, horario_apertura, horario_cierre, telefono_local)
+-- VALUES (1, 'La Casa de la Comida', 'centro', 'Av. Reforma', '123', 'Centro', 'Ciudad de México', '06000', 'mexicana', '10:00', '22:00', '5555555555');
