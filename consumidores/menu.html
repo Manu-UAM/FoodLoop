@@ -1,30 +1,207 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú · FoodLoop</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodLoop · Menú</title>
+
+    <link rel="stylesheet" href="menu.css" />
+    <link rel="stylesheet" href="../css/loading.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+
     <style>
-        body { font-family: 'Inter', sans-serif; background: #344E41; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; flex-direction: column; }
-        .container { background: #DAD7CD; color: #1B1B1B; padding: 40px; border-radius: 20px; text-align: center; max-width: 500px; }
-        h1 { font-size: 32px; }
-        p { font-size: 18px; }
+        [data-tooltip] { position: relative; cursor: help; }
+        [data-tooltip]::before, [data-tooltip]::after {
+            opacity: 0; visibility: hidden; transition: all 0.25s ease; pointer-events: none; z-index: 99999;
+            position: absolute; left: 50%; transform: translateX(-50%);
+        }
+        [data-tooltip]::before {
+            content: attr(data-tooltip); padding: 8px 14px; background: #1e293b; color: #f1f5f9; border-radius: 8px;
+            font-size: 0.8rem; font-weight: 500; line-height: 1.5; white-space: normal; word-break: break-word;
+            width: max-content; max-width: 280px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1); bottom: calc(100% + 10px);
+        }
+        [data-tooltip]::after {
+            content: ""; border: 6px solid transparent; border-top-color: #1e293b; bottom: calc(100% + 4px);
+        }
+        [data-tooltip]:hover::before, [data-tooltip]:hover::after { opacity: 1; visibility: visible; }
+        [data-tooltip].tooltip-bottom::before { bottom: auto; top: calc(100% + 10px); }
+        [data-tooltip].tooltip-bottom::after { bottom: auto; top: calc(100% + 4px); border-top-color: transparent; border-bottom-color: #1e293b; }
+        body, .header, .main-content, .footer-nav, .filter-bar, .card { overflow: visible !important; }
+        .card, .btn, .nav-item, .switch, .filter-btn { position: relative; }
+
+        .filter-dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 10px;
+            padding: 6px 0;
+            min-width: 150px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+        .filter-dropdown .dropdown-content.show { display: block; }
+        .filter-dropdown .dropdown-content .dropdown-item {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 500;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .filter-dropdown .dropdown-content .dropdown-item:hover {
+            background: var(--color-primary-light);
+        }
+        .filter-dropdown .dropdown-content .dropdown-item i { display: none; }
+
+        .filter-btn.dropdown-toggle {
+            margin: 0;
+            border: 2px solid var(--border-card);
+            background: transparent;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .filter-btn.dropdown-toggle:hover {
+            border-color: var(--color-primary);
+            color: var(--text-primary);
+        }
+        .filter-btn.dropdown-toggle.active {
+            background: var(--color-primary);
+            color: #FFFFFF;
+            border-color: var(--color-primary);
+        }
+        .filter-btn.dropdown-toggle i.fa-chevron-down {
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+        .filter-btn.dropdown-toggle.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .filter-bar { flex-wrap: nowrap; overflow-x: auto; }
+            .filter-dropdown .dropdown-content { left: 0; right: auto; min-width: 140px; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🍽️ Menú del Consumidor</h1>
-        <p>Bienvenido, <span id="nombreUsuario">Usuario</span>.</p>
-        <p>Aquí verás los platillos disponibles.</p>
-        <button onclick="cerrarSesion()" style="background: #588157; color: white; border: none; padding: 12px 30px; border-radius: 10px; cursor: pointer; font-size: 16px;">Cerrar sesión</button>
+
+    <header class="header">
+        <div class="header-left" id="logoLink" style="cursor:pointer;" data-tooltip="Ir al inicio">
+            <img src="../images/logo.png" alt="FoodLoop" class="logo" />
+            <div class="header-info">
+                <h1 id="logoTitle">FoodLoop</h1>
+                <span class="location" data-tooltip="Tu ubicación actual">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    Col. Roma Norte, CDMX
+                </span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="btn-notificaciones" data-tooltip="Ver notificaciones">
+                <i class="fas fa-bell" aria-hidden="true"></i>
+                <span class="badge-notificacion" id="notifBadge">3</span>
+            </button>
+            <button class="btn-logout" onclick="cerrarSesion()" data-tooltip="Cerrar sesión">
+                <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Cerrar Sesión
+            </button>
+        </div>
+    </header>
+
+    <nav class="filter-bar">
+        <button class="filter-btn active" data-filter="todos" data-tooltip="Ver todos los platillos">Todos</button>
+        <button class="filter-btn" data-filter="cerca" data-tooltip="Platillos cerca de ti">Cerca de ti</button>
+        <button class="filter-btn" data-filter="subasta" data-tooltip="Platillos en subasta">Subastas</button>
+        <button class="filter-btn" data-filter="postres" data-tooltip="Postres y dulces">Postres</button>
+        <div class="filter-dropdown">
+            <button class="filter-btn dropdown-toggle" id="dropdownToggle" data-tooltip="Más opciones de filtro">
+                Más <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <button class="dropdown-item" data-filter="mexicana">Mexicana</button>
+                <button class="dropdown-item" data-filter="rapida">Comida rápida</button>
+                <button class="dropdown-item" data-filter="italiana">Italiana</button>
+                <button class="dropdown-item" data-filter="asiatica">Asiática</button>
+                <button class="dropdown-item" data-filter="vegetariana">Vegetariana</button>
+                <button class="dropdown-item" data-filter="donacion">Donaciones</button>
+                <button class="dropdown-item" data-filter="ofertas">Ofertas</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content" id="mainContent">
+        <div class="loading-spinner-container">
+            <div class="spinner"></div>
+            <p>Cargando platillos...</p>
+        </div>
+    </main>
+
+    <footer class="footer-nav">
+        <button class="nav-item active" onclick="window.location.href='menu.html'">
+            <i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span>
+        </button>
+        <button class="nav-item" onclick="window.location.href='carrito.html'">
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i><span>Carrito</span>
+            <span class="badge-carrito" id="cartBadge">0</span>
+        </button>
+        <button class="nav-item" onclick="window.location.href='favoritos.html'">
+            <i class="fas fa-heart" aria-hidden="true"></i><span>Favoritos</span>
+        </button>
+        <button class="nav-item" onclick="window.location.href='mis-reservas.html'">
+            <i class="fas fa-clipboard-list" aria-hidden="true"></i><span>Reservas</span>
+        </button>
+        <button class="nav-item" onclick="window.location.href='perfil-consumidor.html'">
+            <i class="fas fa-user" aria-hidden="true"></i><span>Perfil</span>
+        </button>
+    </footer>
+
+    <div class="footer-accesibilidad">
+        <div class="switch-group">
+            <span class="switch-label" data-tooltip="Activar colores para daltonismo">
+                <i class="fas fa-eye" aria-hidden="true"></i> Modo daltónico
+            </span>
+            <label class="switch">
+                <input type="checkbox" id="modoDaltonico" />
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="switch-group">
+            <span class="switch-label" data-tooltip="Aumentar tamaño de textos">
+                <i class="fas fa-font" aria-hidden="true"></i> Texto grande
+            </span>
+            <label class="switch">
+                <input type="checkbox" id="textoGrande" />
+                <span class="slider"></span>
+            </label>
+        </div>
     </div>
-    <!-- RUTAS CORREGIDAS: subir un nivel con ../ -->
+
+    <script src="../js/config.js"></script>
+    <script src="../js/preferences.js"></script>
     <script src="../js/auth.js"></script>
-    <script>
-        const usuario = obtenerUsuarioLogueado();
-        if (usuario) {
-            document.getElementById('nombreUsuario').textContent = usuario.nombre || 'Usuario';
-        }
-    </script>
+    <script src="../js/api.js"></script>
+    <script src="../js/loading.js"></script>
+    <script src="menu.js"></script>
 </body>
 </html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mis Reservas · FoodLoop</title>
+    <link rel="stylesheet" href="mis-reservas.css" />
+    <link rel="stylesheet" href="../css/loading.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        [data-tooltip] { position: relative; cursor: help; }
+        [data-tooltip]::before, [data-tooltip]::after {
+            opacity: 0; visibility: hidden; transition: all 0.25s ease; pointer-events: none; z-index: 99999;
+            position: absolute; left: 50%; transform: translateX(-50%);
+        }
+        [data-tooltip]::before {
+            content: attr(data-tooltip); padding: 8px 14px; background: #1e293b; color: #f1f5f9; border-radius: 8px;
+            font-size: 0.8rem; font-weight: 500; line-height: 1.5; white-space: normal; word-break: break-word;
+            width: max-content; max-width: 280px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1); bottom: calc(100% + 10px);
+        }
+        [data-tooltip]::after {
+            content: ""; border: 6px solid transparent; border-top-color: #1e293b; bottom: calc(100% + 4px);
+        }
+        [data-tooltip]:hover::before, [data-tooltip]:hover::after { opacity: 1; visibility: visible; }
+        [data-tooltip].tooltip-bottom::before { bottom: auto; top: calc(100% + 10px); }
+        [data-tooltip].tooltip-bottom::after { bottom: auto; top: calc(100% + 4px); border-top-color: transparent; border-bottom-color: #1e293b; }
+        body, .header, .main-content, .footer-nav, .card { overflow: visible !important; }
+        .card, .btn, .nav-item, .switch { position: relative; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <img src="../images/logo.png" alt="FoodLoop" class="logo" />
+            <div class="header-info">
+                <h1>FoodLoop</h1>
+                <span class="location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Mis Reservas</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="btn-logout" onclick="cerrarSesion()" data-tooltip="Cerrar sesión">
+                <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content" id="mainContent">
+        <h2 class="page-title">📋 Mis Reservas</h2>
+        <div id="reservasContainer">
+            <!-- Renderizado por JavaScript -->
+        </div>
+    </main>
+
+    <footer class="footer-nav">
+        <button class="nav-item" onclick="window.location.href='menu.html'">
+            <i class="fas fa-home" aria-hidden="true"></i><span>Inicio</span>
+        </button>
+        <button class="nav-item" onclick="window.location.href='carrito.html'">
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i><span>Carrito</span>
+            <span class="badge-carrito" id="cartBadge">0</span>
+        </button>
+        <button class="nav-item" onclick="window.location.href='favoritos.html'">
+            <i class="fas fa-heart" aria-hidden="true"></i><span>Favoritos</span>
+        </button>
+        <button class="nav-item active" onclick="window.location.href='mis-reservas.html'">
+            <i class="fas fa-clipboard-list" aria-hidden="true"></i><span>Reservas</span>
+        </button>
+        <button class="nav-item" onclick="window.location.href='perfil-consumidor.html'">
+            <i class="fas fa-user" aria-hidden="true"></i><span>Perfil</span>
+        </button>
+    </footer>
+
+    <div class="footer-accesibilidad">
+        <div class="switch-group">
+            <span class="switch-label" data-tooltip="Activar colores para daltonismo">
+                <i class="fas fa-eye" aria-hidden="true"></i> Modo daltónico
+            </span>
+            <label class="switch" data-tooltip="Interruptor modo daltónico">
+                <input type="checkbox" id="modoDaltonico" />
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="switch-group">
+            <span class="switch-label" data-tooltip="Aumentar tamaño de textos">
+                <i class="fas fa-font" aria-hidden="true"></i> Texto grande
+            </span>
+            <label class="switch" data-tooltip="Interruptor texto grande">
+                <input type="checkbox" id="textoGrande" />
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/preferences.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/loading.js"></script>
+    <script src="mis-reservas.js"></script>
+</body>
+</html>

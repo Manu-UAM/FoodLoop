@@ -1,0 +1,139 @@
+/* ================================================================
+   MIS RESERVAS · ESTILOS (CON PALETA DE COLORES)
+   ================================================================ */
+
+:root {
+    --bg-body: #344E41;
+    --bg-card: #DAD7CD;
+    --bg-header: #1E2D20;
+    --bg-footer: #1E2D20;
+    --text-primary: #1B1B1B;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --text-light: #F9FAFB;
+    --color-primary: #588157;
+    --color-primary-dark: #3A5A40;
+    --color-primary-light: #F0F7EE;
+    --border-card: #A3B18A;
+    --shadow-color: rgba(88, 129, 87, 0.15);
+    --shadow-hover: rgba(88, 129, 87, 0.3);
+    --color-error: #B91C1C;
+    --color-success: #15803D;
+    --color-warning: #F59E0B;
+}
+
+body.modo-daltonico {
+    --bg-body: linear-gradient(135deg, #2D1869, #4A2C8A, #784FC8);
+    --bg-card: #D4D0F0;
+    --bg-header: #1A0E3E;
+    --bg-footer: #1A0E3E;
+    --text-primary: #1A0E3E;
+    --text-secondary: #4B3A7A;
+    --text-muted: #6B4A9A;
+    --color-primary: #7B4FC8;
+    --color-primary-dark: #4A2C8A;
+    --color-primary-light: #EEE8F7;
+    --border-card: #B8A5E8;
+    --shadow-color: rgba(123, 79, 200, 0.15);
+    --shadow-hover: rgba(123, 79, 200, 0.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: var(--bg-body);
+    color: var(--text-primary);
+    transition: all 0.4s ease;
+    padding-bottom: 80px;
+    padding-top: 80px;
+}
+
+.header {
+    background: var(--bg-header);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--border-card);
+}
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-left .logo { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border-card); object-fit: contain; background: white; padding: 4px; }
+.header-info h1 { font-size: 20px; color: #FFFFFF; font-weight: 700; }
+.header-info .location { font-size: 12px; color: #C5D0C5; display: flex; align-items: center; gap: 4px; }
+.header-info .location i { color: var(--color-primary); }
+.btn-logout { background: transparent; border: 2px solid #EF4444; color: #EF4444; padding: 6px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; }
+.btn-logout:hover { background: #EF4444; color: #FFFFFF; transform: translateY(-2px); }
+
+.main-content { max-width: 800px; margin: 0 auto; padding: 20px; }
+.page-title { font-size: 24px; font-weight: 800; color: #FFFFFF; text-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px; text-align: center; }
+
+.reserva-item { background: var(--bg-card); border-radius: 16px; padding: 18px; margin-bottom: 16px; border: 1px solid var(--border-card); transition: all 0.3s ease; }
+.reserva-item:hover { box-shadow: 0 4px 20px var(--shadow-hover); }
+.reserva-item .reserva-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.reserva-item .reserva-codigo { font-weight: 800; font-size: 18px; color: var(--color-primary); font-family: monospace; letter-spacing: 1px; }
+.reserva-item .reserva-estado { padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.estado-pendiente { background: #FEF3C7; color: #92400E; }
+.estado-confirmada { background: #DBEAFE; color: #1E40AF; }
+.estado-completada { background: #D1FAE5; color: #065F46; }
+.estado-cancelada { background: #FEE2E2; color: #991B1B; }
+.reserva-item .reserva-detalles { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-card); }
+.reserva-item .reserva-detalles p { font-size: 14px; color: var(--text-secondary); margin: 4px 0; }
+.reserva-item .reserva-detalles strong { color: var(--text-primary); }
+.reserva-item .reserva-actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+.reserva-item .btn-cancelar { background: var(--color-error); color: #FFFFFF; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; }
+.reserva-item .btn-cancelar:hover { opacity: 0.8; transform: translateY(-2px); }
+.reserva-item .btn-ver-detalle { background: var(--color-primary); color: #FFFFFF; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; }
+.reserva-item .btn-ver-detalle:hover { background: var(--color-primary-dark); transform: translateY(-2px); }
+
+/* Modal detalles */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+.modal-overlay.active { display: flex; }
+.modal-content { background: var(--bg-card); border-radius: 20px; max-width: 500px; width: 100%; padding: 30px; border: 2px solid var(--border-card); max-height: 90vh; overflow-y: auto; }
+.modal-content .modal-close { float: right; background: none; border: none; font-size: 28px; cursor: pointer; color: var(--text-secondary); }
+.modal-content h3 { font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 16px; }
+.modal-content .detalle-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-card); }
+.modal-content .detalle-row .label { color: var(--text-secondary); }
+.modal-content .detalle-row .value { color: var(--text-primary); font-weight: 600; }
+.modal-content .mensaje-agradecimiento { text-align: center; margin-top: 20px; padding: 16px; background: var(--color-primary-light); border-radius: 12px; border: 1px solid var(--color-primary); }
+.modal-content .mensaje-agradecimiento p { font-size: 16px; color: var(--color-primary); font-weight: 600; }
+
+.footer-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-footer); display: flex; justify-content: space-around; padding: 10px 0 14px; border-top: 2px solid var(--border-card); z-index: 100; }
+.footer-nav .nav-item { background: transparent; border: none; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; font-size: 10px; font-weight: 500; font-family: 'Inter', sans-serif; transition: all 0.3s ease; padding: 4px 16px; position: relative; }
+.footer-nav .nav-item i { font-size: 22px; }
+.footer-nav .nav-item.active { color: var(--color-primary); }
+.footer-nav .nav-item.active i { color: var(--color-primary); }
+.badge-carrito { position: absolute; top: -4px; right: 4px; background: #EF4444; color: white; font-size: 10px; font-weight: 700; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+
+.footer-accesibilidad { position: fixed; bottom: 70px; left: 0; right: 0; background: var(--bg-header); padding: 10px 20px; display: flex; justify-content: center; gap: 40px; border-top: 2px solid var(--border-card); border-bottom: 2px solid var(--border-card); flex-wrap: wrap; z-index: 99; transition: all 0.4s ease; }
+.footer-accesibilidad .switch-group { display: flex; align-items: center; gap: 12px; }
+.footer-accesibilidad .switch-label { font-size: 13px; font-weight: 500; color: #FFFFFF; display: flex; align-items: center; gap: 6px; }
+.footer-accesibilidad .switch-label i { color: var(--color-primary); }
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.3s; border-radius: 24px; }
+.slider::before { content: ''; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.3s; border-radius: 50%; }
+.switch input:checked + .slider { background-color: var(--color-primary); }
+.switch input:checked + .slider::before { transform: translateX(20px); }
+body.modo-daltonico .slider { background-color: #9C8BC8 !important; }
+body.modo-daltonico .switch input:checked + .slider { background-color: var(--color-primary) !important; }
+
+body.texto-grande { font-size: 18px; }
+body.texto-grande .header-info h1 { font-size: 24px; }
+body.texto-grande .reserva-item .reserva-codigo { font-size: 22px; }
+body.texto-grande .footer-nav .nav-item { font-size: 12px; }
+body.texto-grande .footer-nav .nav-item i { font-size: 26px; }
+body.texto-grande .footer-accesibilidad .switch-label { font-size: 15px; }
+
+@media (max-width: 480px) {
+    .reserva-item .reserva-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .footer-accesibilidad { gap: 20px; padding: 8px 14px; bottom: 62px; }
+    body { padding-bottom: 62px; }
+    .modal-content { padding: 20px; margin: 10px; }
+}

@@ -1363,11 +1363,8 @@ if (registroForm) {
             console.log('✅ Usuario guardado en PostgreSQL');
             localStorage.setItem('usuario_sesion', JSON.stringify(resultado.data.usuario));
 
-            // ================================================================
-            // ENVIAR CORREO DE BIENVENIDA
-            // ================================================================
             if (datos.email && datos.email.includes('@')) {
-            
+                /*
                 try {
                 const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
                 
@@ -1401,7 +1398,7 @@ if (registroForm) {
             } catch (error) {
                 console.error('❌ Error en el envío del correo:', error);
             }
-                
+            */
             console.log('📧 Simulación de correo enviado. API deshabilitado.');
         } else {
             console.warn('⚠️ Correo no válido, no se envió mensaje');
@@ -1420,9 +1417,7 @@ if (registroForm) {
     });
 }
 
-// ================================================================
-// ELIMINAR ERROR AL ESCRIBIR
-// ================================================================
+
 document.querySelectorAll('.form-group input, .form-group select').forEach(input => {
     input.addEventListener('input', function() {
         limpiarErrorCampo(this);
@@ -1439,9 +1434,7 @@ document.querySelectorAll('.checkbox-moderno input[type="checkbox"]').forEach(cb
     });
 });
 
-// ================================================================
-// INICIAR CUANDO EL DOM ESTÉ LISTO
-// ================================================================
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', inicializarRegistro);
 } else {

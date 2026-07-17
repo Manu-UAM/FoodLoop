@@ -1,14 +1,7 @@
-// ================================================================
-// API · COMUNICACIÓN CON EL BACKEND
-// ================================================================
+const API_URL = 'http://localhost:3000/api';
 
-//const API_URL = 'http://localhost:3000/api';
+//const API_URL = 'https://foodloop-backend-ij1k.onrender.com/api';
 
-const API_URL = 'https://foodloop-backend-ij1k.onrender.com/api';
-
-// ================================================================
-// REGISTRO DE USUARIO
-// ================================================================
 async function registrarUsuario(datos) {
     try {
         // Construir el objeto según lo que espera el backend
