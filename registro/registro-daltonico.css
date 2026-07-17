@@ -2,7 +2,7 @@
    REGISTRO · MODO DALTÓNICO (PALETA MORADA)
    ================================================================ */
 
-/* ===== REDEFINIR VARIABLES ===== */
+
 body.modo-daltonico {
     --bg-body: linear-gradient(135deg, #2D1B69 0%, #4A2C8A 50%, #7B4FC8 100%);
     --bg-card: #D4D0F0;

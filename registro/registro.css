@@ -2,9 +2,9 @@
    REGISTRO · ESTILOS UNIFICADOS CON VARIABLES CSS
    ================================================================ */
 
-/* ===== VARIABLES CSS ===== */
+
 :root {
-    /* Modo Normal (Verde) */
+  
     --bg-body: #344E41;
     --bg-card: #DAD7CD;
     --border-card: #A3B18A;
@@ -26,6 +26,7 @@
 }
 
 /* ===== MODO DALTÓNICO ===== */
+
 body.modo-daltonico {
     background: linear-gradient(135deg, #2D1B69 0%, #4A2C8A 50%, #7B4FC8 100%) !important;
     --bg-card: #D4D0F0;
@@ -2104,4 +2105,142 @@ body.texto-grande select {
     min-height: 56px !important;
     background-size: 18px !important;
     background-position: right 16px center !important;
+}
+
+/* ================================================================
+   SUB-PASOS PARA RESTAURANTE
+   ================================================================ */
+
+.sub-step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.sub-step {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--step-inactive);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.sub-step.active {
+    background: var(--color-primary);
+    color: #FFFFFF;
+}
+
+.sub-step-line {
+    width: 20px;
+    height: 2px;
+    background: var(--step-inactive);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.sub-step-line.active {
+    background: var(--color-primary);
+}
+
+.sub-step-content {
+    animation: fadeStep 0.3s ease;
+}
+
+.sub-step-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+/* Modo daltónico para sub-pasos */
+body.modo-daltonico .sub-step.active {
+    background: var(--color-primary);
+}
+
+body.modo-daltonico .sub-step-line.active {
+    background: var(--color-primary);
+}
+
+/* Texto grande para sub-pasos */
+body.texto-grande .sub-step {
+    font-size: 14px;
+    padding: 6px 16px;
+}
+
+body.texto-grande .sub-step-line {
+    width: 25px;
+}
+
+/* ===== ASEGURAR QUE LOS SWITCHES SIEMPRE SEAN VISIBLES ===== */
+.accesibilidad-footer {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* ===== BOTONES DE SUB-PASOS ===== */
+.btn-prev-sub,
+.btn-next-sub {
+    background: var(--color-primary) !important;
+    color: #FFFFFF !important;
+    border: 2px solid var(--color-primary-dark) !important;
+    box-shadow: 0 4px 15px var(--shadow-color) !important;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-prev-sub:hover,
+.btn-next-sub:hover {
+    background: var(--color-primary-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--shadow-color) !important;
+}
+
+.btn-prev-sub {
+    background: var(--step-inactive) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--input-border) !important;
+    box-shadow: none !important;
+}
+
+.btn-prev-sub:hover {
+    background: #C5C2B8 !important;
+}
+
+body.modo-daltonico .btn-prev-sub:hover {
+    background: #C5C0E8 !important;
+}
+
+.btn-prev-sub,
+.btn-next-sub {
+    min-width: 120px;
+    justify-content: center;
+}
+
+.sub-step-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.accesibilidad-footer {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
