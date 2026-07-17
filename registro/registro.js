@@ -1364,7 +1364,7 @@ if (registroForm) {
             localStorage.setItem('usuario_sesion', JSON.stringify(resultado.data.usuario));
 
             if (datos.email && datos.email.includes('@')) {
-                /*
+                
                 try {
                 const nombreCompleto = `${datos.nombre} ${datos.apellido}`;
                 
@@ -1398,7 +1398,7 @@ if (registroForm) {
             } catch (error) {
                 console.error('❌ Error en el envío del correo:', error);
             }
-            */
+            
             console.log('📧 Simulación de correo enviado. API deshabilitado.');
         } else {
             console.warn('⚠️ Correo no válido, no se envió mensaje');

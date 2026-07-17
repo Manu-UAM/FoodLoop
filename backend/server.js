@@ -7,14 +7,14 @@ const jwt = require('jsonwebtoken');
 
 dotenv.config();
 
-/*
+
 // Conexión a PostgreSQL (remotamente remoto jajaja)
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
 });
- */
+ 
 
-
+/*
 // Conexión a PostgreSQL (localmente local xD)
 const pool = new Pool({
     host: 'localhost',
@@ -23,7 +23,7 @@ const pool = new Pool({
     password: '123456', // ← Tu contraseña local
     database: 'foodloop'
 });
-
+*/
 
 // Probar conexión a la base de datos
 pool.connect((err, client, release) => {
